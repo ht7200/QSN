@@ -200,7 +200,8 @@
 				],
 				"refer": [
 					"naires.html",
-					"CreateQst.html"
+					"CreateQst.html",
+					"reply.html"
 				],
 				"priority": 0
 			},
@@ -228,7 +229,9 @@
 			},
 			"question_bank.html": {
 				"resources": [
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [
 					"createQs.html"
@@ -243,6 +246,13 @@
 					"css/mui.min.css"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"reply.html": {
+				"resources": [],
+				"refer": [
+					"naires.html"
+				],
 				"priority": 0
 			}
 		},

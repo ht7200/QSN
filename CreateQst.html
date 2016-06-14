@@ -94,6 +94,8 @@
 						var result = MyJson.d;
 						if (result.indexOf("失败") < 0 ) {
 							plus.nativeUI.toast("创建成功");
+							alert(result);
+							window.localStorage["qst_Guid"] = result;
 							plus.webview.open("/question_bank.html"); 
 						} else {
 							alert(result);

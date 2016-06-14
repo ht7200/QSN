@@ -47,7 +47,7 @@
 			
 			#optionbox {
 				margin-top: 2em;
-				//	display: none;
+				//display: none;
 			}
 			
 			.success {
@@ -94,7 +94,7 @@
 
 		<div class="mui-card" id="optionbox">
 			<h5>设置选项：(依次填写，多余可不填)</h5>
-			<ul class="mui-table-view mui-grid-view mui-grid-9">
+			<ul class="mui-table-view mui-grid-view mui-grid-9" id="ulnode">
 				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
 					A
 					<input type="text" id="qA" placeholder="例：是"></li>
@@ -102,30 +102,17 @@
 					B
 					<input type="text" id="qB" placeholder="例：否">
 				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
-					C
-					<input type="text" id="qC">
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
-					D
-					<input type="text" id="qD">
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
-					E
-					<input type="text" id="qE">
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
-					F
-					<input type="text" id="qF">
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" style="border: 1px solid #777777;" id="addOpt">
-					增加选项
-				</li>
 			</ul>
+			<button type="button" class="mui-btn mui-btn-success" id="addOpt" style="margin-top: 5px;width: 100px;">
+					增加选项
+				</button>
+			<!--<button type="button" class="mui-btn mui-btn-danger" id="text">
+					删除选项
+				</button>-->
 		</div>
 
 		<div class="mui-card success">
-			<button type="button" class="mui-btn mui-btn-danger success" id="success">
+			<button type="button" class="mui-btn mui-btn-danger success" id="push">
 					完成
 				</button>
 		</div>
@@ -144,11 +131,41 @@
 				document.getElementById("optionbox").style.display = 'none';
 			}, false);
 
+			var num = 67;
+			document.getElementById("addOpt").addEventListener('tap', function(event) {
+				var nLi = document.createElement("li");
+				nLi.className = "mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4";
+				var nInput = document.createElement("input");
+				nInput.type = "text"; nInput.id = 'q'+String.fromCharCode(num);
+				nLi.innerHTML = String.fromCharCode(num);
+				num++;
+				nLi.appendChild(nInput);
+				var element = document.getElementById("ulnode");
+				element.appendChild(nLi);
+
+				var nLi = document.createElement("li");
+				nLi.className = "mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4";
+				var nInput = document.createElement("input");
+				nInput.type = "text"; nInput.id = 'q'+String.fromCharCode(num);
+				nLi.innerHTML = String.fromCharCode(num);
+				num++;
+				nLi.appendChild(nInput);
+				var element = document.getElementById("ulnode");
+				element.appendChild(nLi);
+			}, false);
+
 		})(mui);
 
 		$(".select_mold button").click(function() {
 			$(this).removeClass("mui-btn-outlined").siblings().addClass("mui-btn-outlined");
 			$(".success").css("display", "block");
+		})
+
+		$("#push").click(function() {
+			mui.alert('题目创建成功', 'Hello MUI', function() {
+				mui.back();
+			});
+
 		})
 	</script>
 	</body>

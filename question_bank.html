@@ -16,6 +16,31 @@
 				background-color: #FFA1BC;
 			}
 			
+			.mui-search {
+				width: 35%;
+				margin-top: 5px;
+				display: inline-block;
+				float: right;
+			}
+			
+			.mui-card {
+				margin-bottom: 5px;
+			}
+			
+			.mui-content-padded {
+				margin-bottom: 0px;
+			}
+			
+			.sieve {
+				width: 100%;
+				height: 50px;
+				z-index: 10;
+				position: fixed;
+				top: 40px;
+				padding: 5px;
+				background-color: #F7F7F7;
+			}
+			
 			.mui-content h5 {
 				/*text-indent: 2em; //首行缩进  */
 				line-height: 1.4em;
@@ -39,6 +64,26 @@
 			
 			.mui-input-group .mui-input-row {
 				height: 31px;
+			}
+			
+			.margin-t {
+				margin-top: 47px;
+			}
+			
+			#topPopover {
+				position: fixed;
+				top: 16px;
+				right: 6px;
+			}
+			
+			#topPopover .mui-popover-arrow {
+				left: auto;
+				right: 6px;
+			}
+			
+			.mui-popover {
+				height: 140px;
+				width: 100px;
 			}
 			
 			.pagination {
@@ -73,25 +118,47 @@
 		</header>
 	</body>
 	<div class="mui-content">
-
+		<div class="sieve">
+			<!--<div class="sievepop">
+				<a href="#topPopover" class="mui-btn  mui-btn-block mui-btn-outlined" style="padding: 5px 20px;">刷选题型</a>
+			</div>-->
+			<div style="width: 60%;display: inline-block;">
+				<div id="segmentedControl" class="mui-segmented-control">
+					<a class="mui-control-item mui-active" id="all_selected">
+				全部
+			</a>
+					<a class="mui-control-item" id="radio_selected">
+				单选
+			</a>
+					<a class="mui-control-item" id="check_selected">
+				多选
+			</a>
+					<a class="mui-control-item" id="text_selected">
+				问答
+			</a>
+				</div>
+			</div>
+			<div class="mui-input-row mui-search search">
+				<input type="search" class="mui-input-clear" placeholder="搜索关键字">
+			</div>
+		</div>
 		<form class="mui-input-group">
-			<div class="mui-card">
+			<div class="mui-card margin-t">
 				<h5 class="mui-content-padded">如果您有孩子，您会在儿童节或者其他时候带他（她）去游乐园吗？(单选题)</h5>
 				<div class="mui-input-row mui-checkbox mui-right">
-					<label>确认添加</label>
+					<label>&nbsp;&nbsp;&nbsp;确认添加</label>
 					<input name="checkbox" value="Item 2" type="checkbox" checked>
 				</div>
 			</div>
-
 			<div class="mui-card">
-				<h5 class="mui-content-padded"><i></i>如果您有孩子，您会在购买以下哪种品牌的奶粉？(多选题)</h5>
+				<h5 class="mui-content-padded">如果您有孩子，您会在购买以下哪种品牌的奶粉？(多选题)</h5>
 				<div class="mui-input-row mui-checkbox mui-right">
-					<label>确认添加</label>
+					<label>&nbsp;&nbsp;&nbsp;确认添加</label>
 					<input name="checkbox" value="Item 2" type="checkbox" checked>
 				</div>
-			</div>
+			</div>			
 		</form>
-		<!--<span class="mui-icon mui-icon-plusempty"></span>-->
+
 		<div class="mui-card">
 			<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined" id="addQs">
 					创建新题
@@ -101,13 +168,29 @@
 					完成提交
 				</button>
 		</div>
+
 	</div>
 	<script type="text/javascript">
 		(function($) {
 			document.getElementById("addQs").addEventListener('tap', function(event) {
-				plus.webview.open("/createQs.html"); 
+				plus.webview.open("/createQs.html");
+			}, false);
+			
+			document.getElementById("all_selected").addEventListener('tap', function(event) {
+
 			}, false);
 
+			document.getElementById("radio_selected").addEventListener('tap', function(event) {
+
+			}, false);
+
+			document.getElementById("check_selected").addEventListener('tap', function(event) {
+
+			}, false);
+
+			document.getElementById("text_selected").addEventListener('tap', function(event) {
+
+			}, false);
 		})(mui);
 	</script>
 	</body>
