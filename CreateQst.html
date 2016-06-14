@@ -82,6 +82,7 @@
 		</div>
 		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			window.localStorage["QS_GUID"] = "";
 			function createQst(title, beginTime, endTime, status, type) {	
 				//alert(title+","+beginTime+","+endTime);
 				$.ajax({
@@ -94,8 +95,9 @@
 						var result = MyJson.d;
 						if (result.indexOf("失败") < 0 ) {
 							plus.nativeUI.toast("创建成功");
-							alert(result);
-							window.localStorage["qst_Guid"] = result;
+							//alert(result);
+							//保存问卷的guid
+							window.localStorage["QST_GUID"] = result;
 							plus.webview.open("/question_bank.html"); 
 						} else {
 							alert(result);

@@ -1,119 +1,171 @@
 <!DOCTYPE html>
 <html>
-
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
-		<script src="js/mui.min.js"></script>
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<style>
-			.mui-bar {
-				background-color: #FFA1BC;
-			}
-			
-			.mui-title {
-				color: #fff;
-			}
-			
-			.mui-card {
-				padding: 10px;
-			}
-			
-			.intro {
-				text-indent: 2em;
-				line-height: 1.5em;
-				color: #242424;
-			}
-			
-			.infor {
-				width: 50%;
-				float: left;				
-			}
-			
-			.infor h6{
-				font-size: .9em;
-				line-height: 1.5em;
-			}
-			
-			.mui-btn {
-				width: 100px;
-				height: 40px;
-				line-height: 0px;
-				display: inline-block;
-				float: right;
-				
-			}
-		</style>
-		<script src="js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" charset="utf-8">
-			mui.init();
-		</script>
-	</head>
-
-	<body>
-		<header class="mui-bar mui-bar-nav">
-			<!--<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>-->
-			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
-			<h1 class="mui-title">梅叶医疗调查问卷</h1>
-		</header>
-		<div class="mui-content">
-			<h5 class="mui-content-padded intro">为了增进医患沟通，我们开通了问卷调查服务。</h5>
-			<div class="mui-card">
-				<div class="infor">
-					<h6>我是医生，我要发起调查问卷</h6>
-				</div>
-				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="create">创建问卷</button>
-			</div>
-			<div class="mui-card">
-				<div class="infor">
-					<h6>我是患者 / 家属，我来填写调查问卷</h6>
-				</div>
-				<button type="button" class="mui-btn mui-btn-success mui-btn-block" id="reply">开始回答</button>
-			</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet" />
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+</head>
+<body>
+	<header class="mui-bar-nav">
+		<div class="logo">
+			<img src="img/logo.png" alt="logo" />
 		</div>
-
-		<script type="text/javascript">
-			(function($, doc) {
-				var createButton = document.getElementById('create');
-				var replyButton = document.getElementById('reply');
-
-				createButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'CreateQst.html',
-							id: 'CreateQst',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-				}, false);
+		<h1 class="mui-title">围产移动管理系统</h1>
+	</header>
+	<div class="mui-content">
+		<form id='login-form' class="mui-input-group">
+			<div class="mui-input-row">
+				<!--<label>账号</label>-->
+				<input id='account' type="text" class="mui-input-clear mui-input" placeholder="手机/邮箱/用户名">
+			</div>
+			<div class="mui-input-row">
+				<!--<label>密码</label>-->
+				<input id='password' type="password" class="mui-input-clear mui-input" placeholder="密码">
+			</div>
+		</form>
+		<form class="mui-input-group">
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					自动登录
+					<div id="autoLogin" class="mui-switch">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+			</ul>
+		</form>
+		<br />
+		<li style="color: #1DB8A8;float: right;list-style-type: none;" id="register">注册新用户</li>
+		<br />
+		<div class="mui-content-padded">
+			<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+		</div>
+		<div class="mui-content-padded">
+			<button id='ScanLogin' class="mui-btn mui-btn-block mui-btn-primary">扫码登陆</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		mui.plusReady(function(){
+			var login = document.getElementById("login");
+			getPosition();
+			
+			login.addEventListener('tap',function(){
+				var account = document.getElementById("account").value;
+				var password = document.getElementById("password").value;
+				Loginup(account,password);
+			});
+			
+			   
+			var backButtonPress = 0;
+			mui.back = function(event) {
+				backButtonPress++;
+				if (backButtonPress > 1) {
+					plus.runtime.quit();
+				} else {
+					plus.nativeUI.toast('再按一次退出应用');
+				}
+				setTimeout(function() {
+					backButtonPress = 0;
+				}, 1000);  
+				return false;
+			};
+		});
+		
+		//登录
+		function Loginup(account,password){
+			$.ajax({
+				data: "{uid:'" + account+ "',pwd:'" + password + "'}",
+	            type: "post",
+	            dataType: "json",
+	            contentType: "application/json;utf-8",
+	            url: Login_url, 
+	            success: function (MyJson) { //回调函数，MyJson，返回值
+	                var result = MyJson.d;
+	                if (result.indexOf("不存在") < 0 && result.indexOf("错误") < 0) {
+                        window.localStorage["UserGuid"] = result; 
+                    	plus.webview.open("/Main.html");
+                    //uexWindow.evaluateScript("Main","0","location.reload();");
+                	}
+                	else{
+                    	//alert(result);
+                    	plus.nativeUI.toast(result);
+                	}
+	            },
+	            error: function (XMLHttpRequest, textStatus, errorThrown)
+	            {
+	                alert('访问网络失败！' + errorThrown);
+	            }
+				});
+		}
+		
+		function getPosition(){
+			plus.geolocation.getCurrentPosition(function(position){
+				var longitude = position.coords.longitude;
+				var latitude = position.coords.latitude;
 				
-				replyButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'reply.html',
-							id: 'reply',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-				}, false);
-
-			}(mui, document));
-		</script>
-	</body>
-
+				var point = new plus.maps.Point(longitude,latitude);
+				//var currentAddress = position.address.country+""+position.address.province+""+position.address.city+""+position.address.district+""+position.address.street+""+position.address.poiName;
+				//alert(currentAddress);
+				//alert(position.addresses)
+				//address = position.addresses;
+				window.localStorage["adderss"] = position.addresses;  
+				//window.localStorage["adderss"] = position.addresses;
+				//alert(position.addresses);
+			});
+		}
+		
+		
+		
+		function MakeUser(id){
+		    $.ajax({
+		        async: false,
+		        data: "{guid:'" + id + "'}",
+		        type: "POST",
+		        dataType: "json",
+		        contentType: "application/json;utf-8",
+		        url: CreateUserByCode_url,
+		        success: function (MyJson) { //回调函数，MyJson，返回值
+		           
+		            if (MyJson == "-1") {
+		                alert("失败");
+		            }
+		            else { 
+		                
+		                var ShowMsg = MyJson.d;
+		                
+		                //alert(ShowMsg);
+		                plus.nativeUI.toast(ShowMsg);
+		                if(ShowMsg.indexOf("无效") < 0 && ShowMsg.indexOf("失败") < 0){
+		                    
+		                    window.localStorage["UserGuid"] = ShowMsg;
+		                    //getPosition();
+		                    uexWindow.open("Main", 0, "Main.html", 2, "", "", 0);
+		                }
+		                
+		            }
+		        }
+		    })
+		}
+        
+        $("#register").click(function(){
+        	window.location.href = 'Register.html';
+        });
+        
+        $("#ScanLogin").click(function(){
+        	//plus.webview.close(plus.webview.currentWebview());
+        	
+        	plus.webview.open("/barcode_scan_login.html");
+        	//plus.webview.open("/testBarCode.html");
+        	
+        })
+		
+	</script>
+</body>
 </html>

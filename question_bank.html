@@ -7,6 +7,8 @@
 		<title></title>
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/config.js"></script>
 		<style>
 			.mui-title {
 				color: #fff;
@@ -14,31 +16,6 @@
 			
 			.mui-bar {
 				background-color: #FFA1BC;
-			}
-			
-			.mui-search {
-				width: 35%;
-				margin-top: 5px;
-				display: inline-block;
-				float: right;
-			}
-			
-			.mui-card {
-				margin-bottom: 5px;
-			}
-			
-			.mui-content-padded {
-				margin-bottom: 0px;
-			}
-			
-			.sieve {
-				width: 100%;
-				height: 50px;
-				z-index: 10;
-				position: fixed;
-				top: 40px;
-				padding: 5px;
-				background-color: #F7F7F7;
 			}
 			
 			.mui-content h5 {
@@ -66,24 +43,21 @@
 				height: 31px;
 			}
 			
-			.margin-t {
-				margin-top: 47px;
-			}
-			
-			#topPopover {
+			.sieve {
+				width: 100%;
+				height: 50px;
+				z-index: 10;
 				position: fixed;
-				top: 16px;
-				right: 6px;
+				top: 40px;
+				padding: 5px;
+				background-color: #F7F7F7;
 			}
 			
-			#topPopover .mui-popover-arrow {
-				left: auto;
-				right: 6px;
-			}
-			
-			.mui-popover {
-				height: 140px;
-				width: 100px;
+			.mui-search {
+				width: 35%;
+				margin-top: 5px;
+				display: inline-block;
+				float: right;
 			}
 			
 			.pagination {
@@ -104,6 +78,10 @@
 				margin: 20px;
 				margin-right: 10px;
 			}
+			
+			.margin-t {
+				margin-top: 47px;
+			}
 		</style>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
@@ -117,7 +95,7 @@
 			<h1 class="mui-title">梅叶医疗调查问卷</h1>
 		</header>
 	</body>
-	<div class="mui-content">
+	<div class="mui-content margin-t">
 		<div class="sieve">
 			<!--<div class="sievepop">
 				<a href="#topPopover" class="mui-btn  mui-btn-block mui-btn-outlined" style="padding: 5px 20px;">刷选题型</a>
@@ -142,23 +120,24 @@
 				<input type="search" class="mui-input-clear" placeholder="搜索关键字">
 			</div>
 		</div>
-		<form class="mui-input-group">
-			<div class="mui-card margin-t">
+		<form class="mui-input-group" id="QsContent">
+			<div class="mui-card">
 				<h5 class="mui-content-padded">如果您有孩子，您会在儿童节或者其他时候带他（她）去游乐园吗？(单选题)</h5>
 				<div class="mui-input-row mui-checkbox mui-right">
-					<label>&nbsp;&nbsp;&nbsp;确认添加</label>
-					<input name="checkbox" value="Item 2" type="checkbox" checked>
+					<label>确认添加</label>
+					<input name="checkbox" value="Item2" type="checkbox" checked>
 				</div>
 			</div>
-			<div class="mui-card">
-				<h5 class="mui-content-padded">如果您有孩子，您会在购买以下哪种品牌的奶粉？(多选题)</h5>
-				<div class="mui-input-row mui-checkbox mui-right">
-					<label>&nbsp;&nbsp;&nbsp;确认添加</label>
-					<input name="checkbox" value="Item 2" type="checkbox" checked>
-				</div>
-			</div>			
-		</form>
 
+			<div class="mui-card">
+				<h5 class="mui-content-padded"><i></i>如果您有孩子，您会在购买以下哪种品牌的奶粉？(多选题)</h5>
+				<div class="mui-input-row mui-checkbox mui-right">
+					<label>确认添加</label>
+					<input name="checkbox" value="Item3" type="checkbox" checked>
+				</div>
+			</div>
+		</form>
+		<!--<span class="mui-icon mui-icon-plusempty"></span>-->
 		<div class="mui-card">
 			<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined" id="addQs">
 					创建新题
@@ -168,30 +147,88 @@
 					完成提交
 				</button>
 		</div>
-
 	</div>
 	<script type="text/javascript">
 		(function($) {
-			document.getElementById("addQs").addEventListener('tap', function(event) {
+
+			//loadData();
+
+			document.getElementById("addQs").addEventListener('tap', function(event) {				
 				plus.webview.open("/createQs.html");
 			}, false);
-			
-			document.getElementById("all_selected").addEventListener('tap', function(event) {
-
-			}, false);
-
-			document.getElementById("radio_selected").addEventListener('tap', function(event) {
-
-			}, false);
-
-			document.getElementById("check_selected").addEventListener('tap', function(event) {
-
-			}, false);
-
-			document.getElementById("text_selected").addEventListener('tap', function(event) {
-
-			}, false);
 		})(mui);
+		
+		var QsArray = new Array();
+		var QsData = window.localStorage["QS_GUID"];
+		if(QsData != "")
+		{
+			QsArray = QsData.split(",");
+		}
+		else{
+			QsArray = "";
+		}
+		
+		var qstguid = window.localStorage["QST_GUID"];
+
+		$("#submit").click(function(){
+			for (i = 0; i < $("#QsContent input").length; i++) {				
+				if($("#QsContent input[type='checkbox']").eq(i).is(':checked')){
+					//alert($("#QsContent input").eq(i).val());
+					QsArray.push($("#QsContent input").eq(i).val());
+					//插入到题目表
+				}
+			}
+			
+			for(var i=0;i<QsArray.length;i++)
+			{
+				//插入数据库关联表操作
+			}
+		})
+
+		function loadData() {
+			$("#QsContent").html("");
+			$.ajax({
+				data: "{id:''}",
+				type: "POST",
+				dataType: "json",
+				contentType: "application/json;utf-8",
+				url: GetQs_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					if (MyJson == "-1") {
+						alert("失败");
+					} else {
+						var MyData = MyJson.d;
+						MyData = eval(MyData);
+						var htmlQs = "";
+						//alert(MyData.length);
+						$.each(MyData, function(i, qsData) {
+							htmlQs += "<div class='mui-card'>";
+							htmlQs += "<h5 class='mui-content-padded'>";
+							htmlQs += qsData.QS_Title;
+							htmlQs += "?(";
+							htmlQs += qsData.QS_Mold;
+							htmlQs += ")</h5>";
+							htmlQs += "<div class='mui-input-row mui-checkbox mui-right'>";
+							htmlQs += "<label>确认添加</label>";
+							htmlQs += "<input name='checkbox' value='" + qsData.QS_GUID + "' type='checkbox'>";
+							htmlQs += "</div>";
+							htmlQs += "</div>";
+						})
+						$("#QsContent").html(htmlQs);
+						// alert(htmlQs);
+						//$("#QsContent").append(htmlQs); 
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					$("div").html(textStatus);
+					$("div").append("<br/>" + XMLHttpRequest.status);
+					$("div").append("<br/>" + XMLHttpRequest.readyState);
+					$("div").append("<br/>" + XMLHttpRequest.responseText);
+					$("div").append("<br/>" + errorThrown);
+				}
+			})
+
+		}
 	</script>
 	</body>
 

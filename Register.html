@@ -1,81 +1,119 @@
 <!DOCTYPE html>
 <html>
-
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
-		<script src="js/mui.min.js"></script>
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<script type="text/javascript" charset="UTF-8">
-			mui.init();
-		</script>
-		<style type="text/css">
-			.mui-content,
-			.mui-card,
-			.mui-table-view-i {
-				background-color: #FEDFE4;
-				/*background-color: #1DB8A8;*/
-			}
-			
-			.wcList {
-				width: 100%;
-				height: 50px;
-				line-height: 40px;
-				padding: 3px 15px;
-				border: solid 2px #777777;
-				border-radius: 5px;
-				margin-bottom: 5px;
-				position: relative;
-				background-color: #fff;
-			}
-			
-			.wcList div {
-				width: 50%;
-				display: inline-block;
-			}
-			
-			.wcList input {
-				float: right;
-				width: 70%;
-				background-color: #e0dfdf;
-				font-size: .9em;
-				color: #555555;
-				padding: 0 .2em;
-			}
-			
-			.wcList select {
-				width: 125%;
-				font-size: 1em;
-				margin-left: 5px;
-				background-color: #e0dfdf;
-			}
-			
-			.select {
-				position: absolute;
-				left: 90px;
-				top: 0px;
-				text-align: center;
-				opacity: 0.8;
-			}
-			
-			.wcList2 input {
-				width: 33%;
-				margin-left: 5px;
-				font-size: .7em;
-			}
-			
-			.wcList3 input {
-				width: 22%;
-				margin-left: 5px;
-			}
-			
-			.wcList4 input {
-				width: 16%;
-				margin-left: 5px;
-			}
-			
-			.wcListB {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	mui.init();
+    </script>
+    <style type="text/css">	
+		.mui-content,
+		.mui-card,
+		.mui-table-view-i {
+			background-color: #FEDFE4;
+			/*background-color: #1DB8A8;*/
+		}
+		
+		.wcList {
+			width: 100%;
+			height: 50px;
+			line-height: 40px;
+			padding: 3px 15px;
+			border: solid 2px #777777;
+			border-radius: 5px;
+			margin-bottom: 5px;
+			position: relative;
+			background-color: #fff;
+		}
+		
+		.wcList div {
+			width: 50%;
+			display: inline-block;
+		}
+		
+		.wcList input {
+			float: right;
+			width: 70%;
+			background-color: #e0dfdf;
+			font-size: .9em;
+			color: #555555;
+			padding:0 .2em;
+		}
+		
+		.wcList select {
+			width: 125%;
+			font-size: 1em;
+			margin-left: 5px;
+			background-color: #e0dfdf;
+		}
+		
+		.select {
+			position: absolute;
+			left: 90px;
+			top: 0px;
+			text-align: center;
+			opacity: 0.8;
+		}
+		
+		.wcList2 input {
+			width: 33%;
+			margin-left: 5px;
+			font-size:.7em ;
+		}
+		
+		.wcList3 input {
+			width: 22%;
+			margin-left: 5px;
+		}
+		
+		.wcList4 input {
+			width: 16%;
+			margin-left: 5px;
+		}
+		
+		.wcListIfo {
+			height: 30px;
+			line-height: 25px;
+			font-size: .7em;
+			padding: 0 20px;
+		}
+		
+		.wcListPlus {
+			background-color: #FFC6D6;
+		}
+		
+		.wcListPlus span {
+			float: right;
+			color: #fff;
+			line-height: 40px;
+			font-size: 1.6em;
+			font-weight: 900;
+		}
+		
+		.wcListTime {
+			height: 55px;
+		}
+		
+		.pikDate {
+			position: absolute;
+			left: 110px;
+			top: 3px;
+		}
+		
+		.pikDate button {
+			width: 110%;
+		}
+		
+		.mui-btn {
+			font-size: 16px;
+			padding: 8px;
+			margin: 3px;
+		}
+		
+		.wcListB {
 				height: 100px;
 				line-height: 100px;
 			}
@@ -84,106 +122,66 @@
 				width: 70%;
 				height: 86px;
 				float: right;
-				background-color: #e0dfdf;				
+				background-color: #e0dfdf;
 			}
-			
-			.wcListIfo {
-				height: 30px;
-				line-height: 25px;
-				font-size: .7em;
-				padding: 0 20px;
-			}
-			
-			.wcListPlus {
-				background-color: #FFC6D6;
-			}
-			
-			.wcListPlus span {
-				float: right;
-				color: #fff;
-				line-height: 40px;
-				font-size: 1.6em;
-				font-weight: 900;
-			}
-			
-			.wcListTime {
-				height: 55px;
-			}
-			
-			.pikDate {
-				position: absolute;
-				left: 110px;
-				top: 3px;
-			}
-			
-			.pikDate button {
-				width: 110%;
-			}
-			
-			.mui-btn {
-				font-size: 16px;
-				padding: 8px;
-				margin: 3px;
-			}
-		</style>
-
-	</head>
-
-	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">注册新用户</h1>
-		</header>
+	</style>
+    
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="back"></a>
+	    <h1 class="mui-title">注册新用户</h1>
+	</header>
+	<div class="mui-content">
 		<div class="mui-content">
-			<div class="mui-content">
-				<div class="mui-card">
-					<ul class="mui-table-view mui-table-view-i">
-						<li class="mui-table-view-cell wcList">
-							账号
-							<input type="text" id="User_ID" readonly="true">
-						</li>
-						<li class="mui-table-view-cell wcList">
-							密码
-							<input type="password" id="User_Pwd" readonly="true">
-						</li>
-						<li class="mui-table-view-cell wcList">
-							姓名
-							<input type="text" id="NAME" readonly="true">
-						</li>
-						<li class="mui-table-view-cell wcList">
-							性别
-							<div class="select">
-								<select class="mui-btn" id="PATIENT_TYPE_Select">
-								<option value="0">--请选择--</option>
+			<div class="mui-card">
+				<ul class="mui-table-view mui-table-view-i">
+					<li class="mui-table-view-cell wcList">
+						账号
+						<input type="text" id="User_ID">
+					</li>
+					<li class="mui-table-view-cell wcList">
+						密码
+						<input type="password" id="User_Pwd">
+					</li>
+					<li class="mui-table-view-cell wcList">
+						姓名
+						<input type="text" id="NAME">
+					</li>
+					<li class="mui-table-view-cell wcList">
+						性别
+						<div class="select">
+							<select class="mui-btn" id="Gender_Select">
+								<option value="0">请选择性别</option>
 								<option value="男">男</option>
 								<option value="女">女</option>
 							</select>
-							</div>
-							<span class="mui-icon mui-icon-arrowdown" style="float: right;line-height: 40px;z-index: 10;">
+						</div>
+					    <span class="mui-icon mui-icon-arrowdown" style="float: right;line-height: 40px;z-index: 10;">
 					</li>
 					<li class="mui-table-view-cell wcList wcListTime">
 						出生日期<!--<div id="info"></div>-->
-						<div class="pikDate"><button id='DATE_OF_BIRTH' type="button" class="mui-btn mui-btn-block">选择日期</button>	</div>								
+						<div class="pikDate"><button id='DATE_OF_BIRTH' type="button" class="mui-btn mui-btn-block">选择日期</button></div>								
 					</li>
 					<li class="mui-table-view-cell wcList">
 						联系方式
-						<input type="text" id="PHONE_NUMBER" readonly="true">
+						<input type="text" id="PHONE_NUMBER">
 					</li>
 					<li class="mui-table-view-cell wcList" style="font-size: .8em;">
 						身份证号码
-						<input type="text" id="ID_NO" readonly="true" style="font-size: 1.2em;">
+						<input type="text" id="ID_NO" style="font-size: 1.2em;">
 					</li>
 					<li class="mui-table-view-cell wcList wcListB">
 						医院位置
 						<!--<input type="text" id="Hospital_Address" readonly="true">-->
-						<textarea name="Hospital_Address" rows="10" cols="3" ></textarea>
+						<textarea id="Hospital_Address" rows="10" cols="3" ></textarea>
 					</li>
 					<li class="mui-table-view-cell wcList">
-						关联产妇信息
-						<div id="GetGuid" style="height:2em;line-height:2em;width:10em;text-align:center;background-color:#FFC6D6;margin:0 auto;">扫码</div>
+						关联产妇信息   
+						<div id="GetGuid">扫码</div>
 					</li>
 					<div class="mui-content-padded">
-						<button id='submit' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+						<button id='submit' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
 					</div>
 				</ul>
 			</div>
@@ -197,7 +195,7 @@
 			var dDate = new Date();
 			dDate.setFullYear(2016, 6, 8);
 			var minDate = new Date();
-			minDate.setFullYear(2015, 0, 1);
+			minDate.setFullYear(1950, 0, 1);
 			var maxDate = new Date();
 			maxDate.setFullYear(2018, 11, 31);
 			plus.nativeUI.pickDate(function(e) {
@@ -230,9 +228,70 @@
 				//var currentAddress = position.address.country+""+position.address.province+""+position.address.city+""+position.address.district+""+position.address.street+""+position.address.poiName;
 				//alert(currentAddress);
 				//alert(position.addresses)
-				$("#Hospital_Address").val(position.addresses);
+				$("#Hospital_Address").text(position.addresses);
+				//alert(position.addresses);  
 			});
 		}
+		
+		function CreateUser(){
+			//var result = window.localStorage["ScanGuid"];
+			var userID = $("#User_ID").val();   
+            var Pwd = $("#User_Pwd").val();           
+            var Name = $("#NAME").val();           
+            var Sex = $("#Gender_Select option:selected").val();
+            var Birthday = $("#DATE_OF_BIRTH").html();          
+            var Phonenum = $("#PHONE_NUMBER").val();           
+            var ID_No = $("#ID_NO").val();           
+            var Imei =  plus.device.imei;
+            var address = $("#Hospital_Address").val();
+            var guid = window.localStorage["ScanGuid"];//= $("#PatientGUID").val();
+            //alert(userID+","+Pwd+","+Name+","+Sex+","+Birthday+","+Phonenum+","+ID_No+","+Imei+","+address+","+guid);
+            
+            $.ajax({
+                async: false,
+                data: "{loginID:'" + userID + "',loginPwd:'" + Pwd + "',name:'" + Name + "',sex:'" + Sex + "',birthday:'" + Birthday + "',phoneNum:'" + Phonenum + "',cardNum:'" + ID_No + "',imei:'" + Imei + "',address:'" + address + "',guid:'" + guid + "'}",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json;utf-8",
+                url: CreateUser_url,
+                success: function (MyJson) { //回调函数，MyJson，返回值
+                   
+                    if (MyJson == "-1") {
+                        //alert("失败");
+                        plus.nativeUI.toast("失败");
+                    }
+                    else { 
+                        
+                        var ShowMsg = MyJson.d;
+                        if(ShowMsg.indexOf("已存在") > -1 ){
+                            
+                            $("#User_ID").focus();
+                        }
+                        else
+                        {
+                        	plus.nativeUI.toast("注册成功");
+                        	plus.webview.open("/Main.html");
+                        	window.localStorage["UserGuid"] = userID;
+                        }
+                    }
+                }
+            })
+            
+		}
+		
+		$("#GetGuid").click(function(){
+			plus.webview.open("/barcode_scan.html");
+		});
+		
+		//提交
+		$("#submit").click(function(){
+			//alert("xxx");
+			CreateUser();
+		});
+		
+		$("#back").click(function(){
+			plus.webview.open("/index.html");
+		});
 	</script>
 </body>
 </html>

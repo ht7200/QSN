@@ -7,6 +7,7 @@
 		<title></title>
 		<script src="js/mui.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/config.js"></script>
 		<style>
 			.mui-title {
 				color: #fff;
@@ -47,7 +48,7 @@
 			
 			#optionbox {
 				margin-top: 2em;
-				//display: none;
+				display: none;
 			}
 			
 			.success {
@@ -76,7 +77,7 @@
 		<h5 class="mui-content-padded intro">现在您可以创建自己想要调查的问题...</h5>
 		<div class="mui-card">
 			题目：
-			<textarea name="qs" rows="3" cols="10" placeholder="例：您会在儿童节或者其他时候带孩子去游乐园吗？"></textarea>
+			<textarea name="qs" id="title" rows="3" cols="10" placeholder="例：您会在儿童节或者其他时候带孩子去游乐园吗？"></textarea>
 
 			<div class="select_mold">
 				<h5>选择题型：</h5>
@@ -97,10 +98,10 @@
 			<ul class="mui-table-view mui-grid-view mui-grid-9" id="ulnode">
 				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
 					A
-					<input type="text" id="qA" placeholder="例：是"></li>
+					<input type="text" id="A" placeholder="例：是"></li>
 				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
 					B
-					<input type="text" id="qB" placeholder="例：否">
+					<input type="text" id="B" placeholder="例：否">
 				</li>
 			</ul>
 			<button type="button" class="mui-btn mui-btn-success" id="addOpt" style="margin-top: 5px;width: 100px;">
@@ -118,17 +119,117 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		var mode = -1;
+		var QsArray = new Array();
+		var QsData = window.localStorage["QS_GUID"];
+		QsArray = QsData.split(",");
+		
+		$("#push").click(function(){
+			//题库Guid
+			var qstguid = window.localStorage["QST_GUID"];
+			
+			var title = $("#title").val();
+			if(mode == -1)
+			{
+				alert("请选择题型");
+				return;
+			}
+			else if(mode == 0)
+			{
+				mode = "单选";
+			}
+			else if(mode == 1)
+			{
+				mode = "多选";
+			}
+			else if(mode == 2)
+			{ 
+				mode = "问答";
+			}
+			var qstdate = dateToStr(new Date());
+			//alert(qstdate);
+			var qs_state = 0;		//题目状态为未添加到问卷
+			var type = "";			//问卷类型
+			
+			$.ajax({
+				data: "{title:'" + title + "',type:'" + type + "',mold:'" + mode + "',date:'" + qstdate + "',status:'" + qs_state + "'}",
+				type: "post",
+				dataType: "json",
+				contentType: "application/json;utf-8",
+				url: CreateQs_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					var result = MyJson.d;
+					if (result.indexOf("失败") < 0 ) {
+						plus.nativeUI.toast("题目创建成功");
+						QsArray.push(result);
+						window.localStorage["QS_GUID"] = QsArray;
+						InsertChoice(qstguid);
+						var btnArray = ['否', '是'];
+						mui.confirm('是否继续添加题目？', '外网移动交互系统', btnArray, function(e) {
+							if (e.index == 1) {
+								plus.webview.currentWebview().reload();
+							} else {
+								//info.innerText = 'MUI没有得到你的认可，继续加油'
+								plus.webview.open("question_bank.html")
+							}
+						});
+						//alert(result);
+						//保存问卷guid
+						//window.localStorage["QST_GUID"] = result;
+						//plus.webview.open("/question_bank.html"); 
+					} else {
+						alert(result);
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}
+			});
+			
+		}); 
+		
+		
+		function dateToStr(datetime) {
+			var year = datetime.getFullYear();
+			var month = datetime.getMonth() + 1; //js从0开始取 
+			var date = datetime.getDate();
+			var hour = datetime.getHours();
+			var minutes = datetime.getMinutes();
+			var second = datetime.getSeconds();
+			if (month < 10) {
+				month = "0" + month;
+			}
+			if (date < 10) {
+				date = "0" + date;
+			}
+			if (hour < 10) {
+				hour = "0" + hour;
+			}
+			if (minutes < 10) {
+				minutes = "0" + minutes;
+			}
+			if (second < 10) {
+				second = "0" + second;
+			}
+			var time = year + "-" + month + "-" + date + " " + hour + ":" + minutes + ":" + second;
+			// alert(time);
+			return time;
+		}
+	
 		(function($) {
 			document.getElementById("radio").addEventListener('tap', function(event) {
 				document.getElementById("optionbox").style.display = 'block';
+				mode = 0;
 			}, false);
 
 			document.getElementById("check").addEventListener('tap', function(event) {
 				document.getElementById("optionbox").style.display = 'block';
+				mode = 1;
 			}, false);
 
 			document.getElementById("text").addEventListener('tap', function(event) {
 				document.getElementById("optionbox").style.display = 'none';
+				mode = 2;
 			}, false);
 
 			var num = 67;
@@ -136,7 +237,7 @@
 				var nLi = document.createElement("li");
 				nLi.className = "mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4";
 				var nInput = document.createElement("input");
-				nInput.type = "text"; nInput.id = 'q'+String.fromCharCode(num);
+				nInput.type = "text"; nInput.id = String.fromCharCode(num);
 				nLi.innerHTML = String.fromCharCode(num);
 				num++;
 				nLi.appendChild(nInput);
@@ -146,7 +247,7 @@
 				var nLi = document.createElement("li");
 				nLi.className = "mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4";
 				var nInput = document.createElement("input");
-				nInput.type = "text"; nInput.id = 'q'+String.fromCharCode(num);
+				nInput.type = "text"; nInput.id = String.fromCharCode(num);
 				nLi.innerHTML = String.fromCharCode(num);
 				num++;
 				nLi.appendChild(nInput);
@@ -160,13 +261,49 @@
 			$(this).removeClass("mui-btn-outlined").siblings().addClass("mui-btn-outlined");
 			$(".success").css("display", "block");
 		})
-
-		$("#push").click(function() {
+		
+		function InsertChoice(Guid){
+			var sort = "";
+			var id = Guid;//window.localStorage["QST_GUID"]; // 此id是混进来的！！！
+			var content = "";
+			for (i = 0; i < $("#ulnode li").length; i++) {
+				var contentChoice = $("#ulnode li input").eq(i).val();
+				var sortContent =  $("#ulnode li input").eq(i).attr("id");
+				if (contentChoice) {
+					content += contentChoice;
+					content += ",";
+					sort += sortContent;
+					sort += ","
+				}
+			}
+			sort = sort.substr(0,sort.length-1);
+			content = content.substr(0,content.length-1);
+			$.ajax({
+						data: "{id:'" + id + "',content:'" + content + "',sort:'" + sort + "'}",
+						type: "post",
+						dataType: "json",
+						contentType: "application/json;utf-8",
+						url: CreateAnswer_url,
+						success: function(MyJson) { //回调函数，MyJson，返回值
+							var result = MyJson.d;
+							if (result.indexOf("失败") < 0) {
+							} else {
+								alert(result);
+							}
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							alert('访问网络失败！' + errorThrown);
+						}						
+					});
+			
+		}
+		
+		/*$("#push").click(function() {
 			mui.alert('题目创建成功', 'Hello MUI', function() {
 				mui.back();
 			});
 
-		})
+		})*/
 	</script>
 	</body>
 
