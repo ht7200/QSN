@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-title {
+				color: #fff;
+			}
+			
+			.mui-bar {
+				background-color: #FFA1BC;
+			}
+			
+			.mui-content h5 {
+				/*text-indent: 2em; //首行缩进  */
+				line-height: 1.4em;
+				font-size: .9em;
+				color: #4f4f44
+			}
+			
+			.mui-input-group{
+				background-color: #efeff4;
+			}
+			
+			.mui-content label {
+				color: #4f4f44;
+				font-size: .8em;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: 31px;
+			}
+
+			.pagination {
+				margin-top: 2em;
+				width: 100%;
+				text-align: center;
+			}
+			
+			.mui-btn {
+				margin-left: 100px;
+				width: 100px;
+			}
+		</style>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>-->
+			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
+			<h1 class="mui-title">梅叶医疗调查问卷</h1>
+		</header>
+	</body>
+	<div class="mui-content">
+
+		<form class="mui-input-group">
+			<div class="mui-card">
+				<h5 class="mui-content-padded">如果您有孩子，您会在儿童节或者其他时候带他（她）去游乐园吗？</h5>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>会</label>
+					<input name="radio1" type="radio" checked>
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>不会</label>
+					<input name="radio1" type="radio">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>不清楚</label>
+					<input name="radio1" type="radio">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>首先要有女朋友</label>
+					<input name="radio1" type="radio">
+				</div>
+			</div>
+			
+			<div class="mui-card">
+				<h5 class="mui-content-padded"><i></i>如果您有孩子，您会在购买以下哪种品牌的奶粉？</h5>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>三鹿</label>
+					<input name="checkbox" value="Item 1" type="checkbox" checked>
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>雀巢</label>
+					<input name="checkbox" value="Item 2" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>雅培</label>
+					<input name="checkbox" value="Item 1" type="checkbox">
+				</div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>首先要有女朋友</label>
+					<input name="checkbox" value="Item 2" type="checkbox">
+				</div>
+			</div>
+		</form>
+		<div class="mui-card">
+			<div class="mui-input-row" style="margin: 10px 5px;">
+				<h5 class="mui-content-padded">提出您的宝贵建议：</h5>
+				<textarea class="textarea" id="textarea" rows="5" placeholder="来吐槽吧O(∩_∩)O！"></textarea>
+			</div>
+		</div>
+		
+		<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" id="next">
+					下一页
+				</button>
+		<button type="button" class="mui-btn mui-btn-success mui-btn-outlined" id="submit">
+					完成提交
+				</button>
+
+		<div class="pagination">
+			<ul class="mui-pagination">
+				<li class="mui-previous mui-disabled">
+					<a href="#">
+							&laquo;
+						</a>
+				</li>
+				<li class="mui-active">
+					<a href="#">
+							1
+						</a>
+				</li>
+				<li>
+					<a href="#">
+							2
+						</a>
+				</li>
+				<li>
+					<a href="#">
+							3
+						</a>
+				</li>
+				<li>
+					<a href="#">
+							4
+						</a>
+				</li>
+				<li>
+					<a href="#">
+							5
+						</a>
+				</li>
+				<li class="mui-next">
+					<a href="#">
+							&raquo;
+						</a>
+				</li>
+			</ul>
+		</div>
+		<!--<p id="info"></p>-->
+	</div>
+	<script type="text/javascript">
+		(function($) {
+			$('.mui-pagination').on('tap', 'a', function() {
+				var li = this.parentNode;
+				var classList = li.classList;
+				if (!classList.contains('mui-active') && !classList.contains('mui-disabled')) {
+					var active = li.parentNode.querySelector('.mui-active');
+					if (classList.contains('mui-previous')) { //previous
+						if (active) {
+							var previous = active.previousElementSibling;
+							if (previous && !previous.classList.contains('mui-previous')) {
+								$.trigger(previous.querySelector('a'), 'tap');
+							} else {
+								classList.add('mui-disabled');
+							}
+						}
+					} else if (classList.contains('mui-next')) { //next
+						if (active) {
+							var next = active.nextElementSibling;
+							if (next && !next.classList.contains('mui-next')) {
+								$.trigger(next.querySelector('a'), 'tap');
+							} else {
+								classList.add('mui-disabled');
+							}
+						}
+					} else { //page
+						active.classList.remove('mui-active');
+						classList.add('mui-active');
+						var page = parseInt(this.innerText);
+						var previousPageElement = li.parentNode.querySelector('.mui-previous');
+						var nextPageElement = li.parentNode.querySelector('.mui-next');
+						previousPageElement.classList.remove('mui-disabled');
+						nextPageElement.classList.remove('mui-disabled');
+						if (page <= 1) {
+							previousPageElement.classList.add('mui-disabled');
+						} else if (page >= 5) {
+							nextPageElement.classList.add('mui-disabled');
+						}
+					}
+				}
+			});
+		})(mui);
+	</script>
+	</body>
+
+</html>

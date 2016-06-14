@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-bar {
+				background-color: #FFA1BC;
+			}
+			
+			.mui-title {
+				color: #fff;
+			}
+			
+			.mui-card {
+				padding: 5px;
+			}
+			
+			.intro {
+				text-indent: 2em;
+				line-height: 1.5em;
+			}
+			
+			.infor {
+				width: 50%;
+				float: left;
+			}
+			
+			.mui-btn {
+				width: 100px;
+				height: 40px;
+				line-height: 0px;
+				display: inline-block;
+				float: right;
+			}
+		</style>
+		<script src="js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>-->
+			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
+			<h1 class="mui-title">梅叶医疗调查问卷</h1>
+		</header>
+		<div class="mui-content">
+			<h5 class="mui-content-padded intro">为了给你提供更优质的服务，请用几分钟的时间完成我们的调查问卷。</h5>
+			<div class="mui-card">
+				<div class="infor">
+					<h6>问卷名称</h6>
+					<h6>发起时间:</h6>
+				</div>
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="submit">开始填写</button>
+			</div>
+			<div class="mui-card">
+				<div class="infor">
+					<h6>问卷名称</h6>
+					<h6>发起时间:</h6>
+				</div>
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="submit1">开始填写</button>
+			</div>
+			<div class="mui-card">
+
+				<div class="infor">
+					<h6>问卷名称</h6>
+					<h6>发起时间:</h6>
+				</div>
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="submit2">开始填写</button>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			(function($, doc) {
+				var submitButton = document.getElementById('submit');
+				var dDate = new Date(); // dDate.getFullYear() dDate.getMonth() dDate.getDate()
+				var day = dDate.getDate(),
+					month = dDate.getMonth() + 1,
+					year = dDate.getFullYear();
+
+				month = (month > 10) ? month : '0' + month;
+				day = (day > 10) ? day : '0' + day;
+				nowDate = '' + year + month + day;
+				var startDate = 20160610;
+				var endDate = 20160614
+				if (startDate > nowDate || endDate < nowDate) {
+					submitButton.style.background = "#ccc";
+					submitButton.style.border = "0";
+				}
+
+				submitButton.addEventListener('tap', function(event) {
+					if (startDate <= nowDate && nowDate <= endDate) {
+						$.openWindow({
+							url: 'naires.html',
+							id: 'naires',
+							preload: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					} else mui.toast('对不起，该问卷不在调查时间');;
+				}, false);
+
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

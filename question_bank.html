@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-title {
+				color: #fff;
+			}
+			
+			.mui-bar {
+				background-color: #FFA1BC;
+			}
+			
+			.mui-content h5 {
+				/*text-indent: 2em; //首行缩进  */
+				line-height: 1.4em;
+				font-size: 1em;
+				color: #4f4f44
+			}
+			
+			.mui-input-group {
+				background-color: #efeff4;
+			}
+			
+			.mui-content label {
+				color: #797979;
+				font-size: .8em;
+			}
+			
+			.mui-checkbox {
+				width: 145px;
+				float: right;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: 31px;
+			}
+			
+			.pagination {
+				margin-top: 4em;
+				width: 100%;
+				text-align: center;
+			}
+			
+			#addQs {
+				display: inline-block;
+				float: left;
+				margin: 20px;
+				margin-left: 10px;
+			}
+			
+			#submit {
+				float: right;
+				margin: 20px;
+				margin-right: 10px;
+			}
+		</style>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>-->
+			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
+			<h1 class="mui-title">梅叶医疗调查问卷</h1>
+		</header>
+	</body>
+	<div class="mui-content">
+
+		<form class="mui-input-group">
+			<div class="mui-card">
+				<h5 class="mui-content-padded">如果您有孩子，您会在儿童节或者其他时候带他（她）去游乐园吗？(单选题)</h5>
+				<div class="mui-input-row mui-checkbox mui-right">
+					<label>确认添加</label>
+					<input name="checkbox" value="Item 2" type="checkbox" checked>
+				</div>
+			</div>
+
+			<div class="mui-card">
+				<h5 class="mui-content-padded"><i></i>如果您有孩子，您会在购买以下哪种品牌的奶粉？(多选题)</h5>
+				<div class="mui-input-row mui-checkbox mui-right">
+					<label>确认添加</label>
+					<input name="checkbox" value="Item 2" type="checkbox" checked>
+				</div>
+			</div>
+		</form>
+		<!--<span class="mui-icon mui-icon-plusempty"></span>-->
+		<div class="mui-card">
+			<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined" id="addQs">
+					创建新题
+				</button>
+
+			<button type="button" class="mui-btn mui-btn-success mui-btn-outlined" id="submit">
+					完成提交
+				</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		(function($) {
+			document.getElementById("addQs").addEventListener('tap', function(event) {
+				plus.webview.open("/createQs.html"); 
+			}, false);
+
+		})(mui);
+	</script>
+	</body>
+
+</html>
