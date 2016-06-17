@@ -43,23 +43,6 @@
 				height: 31px;
 			}
 			
-			.sieve {
-				width: 100%;
-				height: 50px;
-				z-index: 10;
-				position: fixed;
-				top: 40px;
-				padding: 5px;
-				background-color: #F7F7F7;
-			}
-			
-			.mui-search {
-				width: 35%;
-				margin-top: 5px;
-				display: inline-block;
-				float: right;
-			}
-			
 			.pagination {
 				margin-top: 4em;
 				width: 100%;
@@ -78,10 +61,6 @@
 				margin: 20px;
 				margin-right: 10px;
 			}
-			
-			.margin-t {
-				margin-top: 47px;
-			}
 		</style>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
@@ -90,42 +69,19 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<!--<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>-->
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
 			<h1 class="mui-title">梅叶医疗调查问卷</h1>
 		</header>
 	</body>
-	<div class="mui-content margin-t">
-		<div class="sieve">
-			<!--<div class="sievepop">
-				<a href="#topPopover" class="mui-btn  mui-btn-block mui-btn-outlined" style="padding: 5px 20px;">刷选题型</a>
-			</div>-->
-			<div style="width: 60%;display: inline-block;">
-				<div id="segmentedControl" class="mui-segmented-control">
-					<a class="mui-control-item mui-active" id="all_selected">
-				全部
-			</a>
-					<a class="mui-control-item" id="radio_selected">
-				单选
-			</a>
-					<a class="mui-control-item" id="check_selected">
-				多选
-			</a>
-					<a class="mui-control-item" id="text_selected">
-				问答
-			</a>
-				</div>
-			</div>
-			<div class="mui-input-row mui-search search">
-				<input type="search" class="mui-input-clear" placeholder="搜索关键字">
-			</div>
-		</div>
+	<div class="mui-content">
+
 		<form class="mui-input-group" id="QsContent">
-			<div class="mui-card">
+			<!--<div class="mui-card">
 				<h5 class="mui-content-padded">如果您有孩子，您会在儿童节或者其他时候带他（她）去游乐园吗？(单选题)</h5>
 				<div class="mui-input-row mui-checkbox mui-right">
 					<label>确认添加</label>
-					<input name="checkbox" value="Item2" type="checkbox" checked>
+					<input name="checkbox" value="Item 2" type="checkbox" checked>
 				</div>
 			</div>
 
@@ -133,9 +89,9 @@
 				<h5 class="mui-content-padded"><i></i>如果您有孩子，您会在购买以下哪种品牌的奶粉？(多选题)</h5>
 				<div class="mui-input-row mui-checkbox mui-right">
 					<label>确认添加</label>
-					<input name="checkbox" value="Item3" type="checkbox" checked>
+					<input name="checkbox" value="Item 2" type="checkbox" checked>
 				</div>
-			</div>
+			</div>-->
 		</form>
 		<!--<span class="mui-icon mui-icon-plusempty"></span>-->
 		<div class="mui-card">
@@ -149,85 +105,134 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		(function($) {
-
-			//loadData();
-
-			document.getElementById("addQs").addEventListener('tap', function(event) {				
-				plus.webview.open("/createQs.html");
-			}, false);
-		})(mui);
+		$().ready(function(){
+			loadData();
+			check();  
+		});
+	
+		document.getElementById("addQs").addEventListener('tap', function(event) {
+				saveGuid()
+				plus.webview.open("/createQs.html"); 
+		}, false);
 		
-		var QsArray = new Array();
-		var QsData = window.localStorage["QS_GUID"];
-		if(QsData != "")
-		{
-			QsArray = QsData.split(",");
-		}
-		else{
-			QsArray = "";
-		}
+		//alert(QsArray.length);
+		//var qstguid = window.localStorage["QST_GUID"];
 		
-		var qstguid = window.localStorage["QST_GUID"];
-
 		$("#submit").click(function(){
+			var guidArr = new Array();//所有的要插入的题目的guid
+			var QstGuid = window.localStorage["QST_GUID"];		//题库的guid
 			for (i = 0; i < $("#QsContent input").length; i++) {				
 				if($("#QsContent input[type='checkbox']").eq(i).is(':checked')){
 					//alert($("#QsContent input").eq(i).val());
-					QsArray.push($("#QsContent input").eq(i).val());
-					//插入到题目表
+					//QsArray.push($("#QsContent input").eq(i).val());
+					//插入到数据库关联表
+					guidArr.push($("#QsContent input").eq(i).val());
 				}
-			}
+			}   
 			
-			for(var i=0;i<QsArray.length;i++)
-			{
-				//插入数据库关联表操作
-			}
-		})
-
-		function loadData() {
-			$("#QsContent").html("");
+			//alert(guidArr+","+QstGuid);
 			$.ajax({
-				data: "{id:''}",
-				type: "POST",
-				dataType: "json",
+				data: "{id:'" + QstGuid + "',QS:'" + guidArr + "'}",
+				type: "post",
+				dataType: "json", 
 				contentType: "application/json;utf-8",
-				url: GetQs_url,
+				url: MakeQst_Qs_url,
 				success: function(MyJson) { //回调函数，MyJson，返回值
-					if (MyJson == "-1") {
-						alert("失败");
-					} else {
-						var MyData = MyJson.d;
-						MyData = eval(MyData);
-						var htmlQs = "";
-						//alert(MyData.length);
-						$.each(MyData, function(i, qsData) {
-							htmlQs += "<div class='mui-card'>";
-							htmlQs += "<h5 class='mui-content-padded'>";
-							htmlQs += qsData.QS_Title;
-							htmlQs += "?(";
-							htmlQs += qsData.QS_Mold;
-							htmlQs += ")</h5>";
-							htmlQs += "<div class='mui-input-row mui-checkbox mui-right'>";
-							htmlQs += "<label>确认添加</label>";
-							htmlQs += "<input name='checkbox' value='" + qsData.QS_GUID + "' type='checkbox'>";
-							htmlQs += "</div>";
-							htmlQs += "</div>";
-						})
-						$("#QsContent").html(htmlQs);
-						// alert(htmlQs);
-						//$("#QsContent").append(htmlQs); 
-					}
+					alert(MyJson.d);
+					plus.webview.open("/question.html");
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					$("div").html(textStatus);
-					$("div").append("<br/>" + XMLHttpRequest.status);
-					$("div").append("<br/>" + XMLHttpRequest.readyState);
-					$("div").append("<br/>" + XMLHttpRequest.responseText);
-					$("div").append("<br/>" + errorThrown);
+					alert('访问网络失败！' + errorThrown);
 				}
-			})
+			});
+			
+			
+			/*for(var i=0;i<QsArray.length;i++)
+			{
+				//插入数据库关联表操作
+			}*/
+		})
+						
+		
+		function loadData(){
+			$("#QsContent").html("");
+			$.ajax({
+                data: "{id:''}",  
+                type: "POST",
+                dataType: "json",
+                async:false,
+                contentType: "application/json;utf-8",
+                url: GetQs_url,
+                success: function (MyJson) { //回调函数，MyJson，返回值
+                    if (MyJson == "-1") {
+                        alert("失败");
+                    }
+                    else {
+                        var MyData = MyJson.d;  
+                        MyData = eval(MyData); 
+                        var htmlQs = "";
+                        //alert(MyData.length);
+                        $.each(MyData, function (i, qsData) {
+                        	htmlQs += "<div class='mui-card'>";
+                        	htmlQs += "<h5 class='mui-content-padded'>";
+                        	htmlQs += qsData.QS_Title;
+                        	htmlQs +="?(";
+                        	htmlQs += qsData.QS_Mold;
+                        	htmlQs +=")</h5>";
+                        	htmlQs += "<div class='mui-input-row mui-checkbox mui-right'>";
+                        	htmlQs += "<label>确认添加</label>";
+                        	htmlQs += "<input name='checkbox' value='"+qsData.QS_GUID+"' type='checkbox'>";
+                        	htmlQs += "</div>";
+                        	htmlQs += "</div>";
+                        })
+                        $("#QsContent").html(htmlQs);
+                       // alert(htmlQs);
+                    	//$("#QsContent").append(htmlQs); 
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $("div").html(textStatus);
+                    $("div").append("<br/>" + XMLHttpRequest.status);
+                    $("div").append("<br/>" + XMLHttpRequest.readyState);
+                    $("div").append("<br/>" + XMLHttpRequest.responseText);
+                    $("div").append("<br/>" + errorThrown);
+                }
+            })
+			
+		}
+		
+		function saveGuid(){
+			var guidArr = new Array();
+			for (i = 0; i < $("#QsContent input").length; i++) {				
+				if($("#QsContent input[type='checkbox']").eq(i).is(':checked')){
+					//alert($("#QsContent input").eq(i).val());
+					//QsArray.push($("#QsContent input").eq(i).val());
+					//插入到数据库关联表
+					guidArr.push($("#QsContent input").eq(i).val());
+				}
+			} 
+			window.localStorage["QS_GUID"] = guidArr;
+		}
+		
+		function check(){	
+			var QsArray = "";
+			var QsData = window.localStorage["QS_GUID"];
 
+			if (QsData != "") {
+				QsArray = QsData.split(","); //新创建题目的GUID；
+			} else {
+				QsArray = new Array();
+			}
+			var len = QsArray.length;
+			//alert(len);
+			for (i = 0; i < len; i++) {//勾选新创建的题目					
+				for (j = 0; j < $("#QsContent input").length; j++) {
+					if (QsArray[i] == $("#QsContent input").eq(j).val()) { 
+						$("#QsContent input[type='checkbox']").eq(j).attr("checked", true);
+						//$("#QsContent input[type='checkbox']").eq(j).attr("disabled", true);
+					}
+				}
+			}
 		}
 	</script>
 	</body>

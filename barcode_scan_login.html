@@ -106,6 +106,7 @@ function MakeUser(id){
                 if(ShowMsg.indexOf("无效") < 0 && ShowMsg.indexOf("失败") < 0){
                     
                     window.localStorage["UserGuid"] = ShowMsg;
+                    window.localStorage["UserNAME"] = "游客";
                     //alert(ShowMsg);
                     plus.webview.close(plus.webview.currentWebview());
                     plus.webview.open("/Main.html");

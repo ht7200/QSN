@@ -1,6 +1,6 @@
 /*!
  * =====================================================
- * Mui v3.1.0 (http://dev.dcloud.net.cn/mui)
+ * Mui v3.0.0 (http://dev.dcloud.net.cn/mui)
  * =====================================================
  */
 /**
@@ -206,53 +206,6 @@ var mui = (function(document, undefined) {
 			}, false);
 		}
 		return this;
-	};
-	/**
-	 * 将 fn 缓存一段时间后, 再被调用执行
-	 * 此方法为了避免在 ms 段时间内, 执行 fn 多次. 常用于 resize , scroll , mousemove 等连续性事件中;
-	 * 当 ms 设置为 -1, 表示立即执行 fn, 即和直接调用 fn 一样;
-	 * 调用返回函数的 stop 停止最后一次的 buffer 效果
-	 * @param {Object} fn
-	 * @param {Object} ms
-	 * @param {Object} context
-	 */
-	$.buffer = function(fn, ms, context) {
-		var timer;
-		var lastStart = 0;
-		var lastEnd = 0;
-		var ms = ms || 150;
-
-		function run() {
-			if (timer) {
-				timer.cancel();
-				timer = 0;
-			}
-			lastStart = $.now();
-			fn.apply(context || this, arguments);
-			lastEnd = $.now();
-		}
-
-		return $.extend(function() {
-			if (
-				(!lastStart) || // 从未运行过
-				(lastEnd >= lastStart && $.now() - lastEnd > ms) || // 上次运行成功后已经超过ms毫秒
-				(lastEnd < lastStart && $.now() - lastStart > ms * 8) // 上次运行或未完成，后8*ms毫秒
-			) {
-				run();
-			} else {
-				if (timer) {
-					timer.cancel();
-				}
-				timer = $.later(run, ms, null, arguments);
-			}
-		}, {
-			stop: function() {
-				if (timer) {
-					timer.cancel();
-					timer = 0;
-				}
-			}
-		});
 	};
 	/**
 	 * each
@@ -7062,7 +7015,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return '<div class="' + CLASS_POPUP_INPUT + '"><input type="text" autofocus placeholder="' + (placeholder || '') + '"/></div>';
 	};
 	var createInner = function(message, title, extra) {
-		return '<div class="' + CLASS_POPUP_INNER + '"><div class="' + CLASS_POPUP_TITLE + '">' + title + '</div><div class="' + CLASS_POPUP_TEXT + '">' + message.replace(/\r\n/g, "<br/>").replace(/\n/g, "<br/>") + '</div>' + (extra || '') + '</div>';
+		return '<div class="' + CLASS_POPUP_INNER + '"><div class="' + CLASS_POPUP_TITLE + '">' + title + '</div><pre class="' + CLASS_POPUP_TEXT + '">' + message + '</pre>' + (extra || '') + '</div>';
 	};
 	var createButtons = function(btnArray) {
 		var length = btnArray.length;
@@ -7651,83 +7604,6 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		$('.mui-input-row input').input();
 	});
 })(mui, window, document);
-(function($, window) {
-	var rgbaRegex = /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/;
-	var getColor = function(colorStr) {
-		var matches = colorStr.match(rgbaRegex);
-		if (matches && matches.length === 5) {
-			return [
-				matches[1],
-				matches[2],
-				matches[3],
-				matches[4]
-			];
-		}
-		return [];
-	};
-	var Transparent = function(element, options) {
-		this.element = element;
-		this.options = $.extend({
-			top: 0,
-			offset: 150,
-			duration: 16
-		}, options || {});
-		this._style = this.element.style;
-		this._bgColor = this._style.backgroundColor;
-		var color = getColor(mui.getStyles(this.element, 'backgroundColor'));
-		if (color.length) {
-			this._R = color[0];
-			this._G = color[1];
-			this._B = color[2];
-			this._A = color[3];
-			this._bufferFn = $.buffer(this.handleScroll, this.options.duration, this);
-			this.initEvent();
-		} else {
-			throw new Error("元素背景颜色必须为RGBA");
-		}
-	};
-
-	Transparent.prototype.initEvent = function() {
-		window.addEventListener('scroll', this._bufferFn);
-		window.addEventListener($.EVENT_MOVE, this._bufferFn);
-	};
-	Transparent.prototype.handleScroll = function() {
-		this._style.backgroundColor = 'rgba(' + this._R + ',' + this._G + ',' + this._B + ',' + (window.scrollY - this.options.top) / this.options.offset + ')';
-	};
-	Transparent.prototype.destory = function() {
-		window.removeEventListener('scroll', this._bufferFn);
-		window.removeEventListener($.EVENT_MOVE, this._bufferFn);
-		this.element.style.backgroundColor = this._bgColor;
-		this.element.mui_plugin_transparent = null;
-	};
-	$.fn.transparent = function(options) {
-		options = options || {};
-		var transparentApis = [];
-		this.each(function() {
-			var transparentApi = this.mui_plugin_transparent;
-			if (!transparentApi) {
-				var top = this.getAttribute('data-top');
-				var offset = this.getAttribute('data-offset');
-				var duration = this.getAttribute('data-duration');
-				if (top !== null && typeof options.top === 'undefined') {
-					options.top = top;
-				}
-				if (offset !== null && typeof options.offset === 'undefined') {
-					options.offset = offset;
-				}
-				if (duration !== null && typeof options.duration === 'undefined') {
-					options.duration = duration;
-				}
-				transparentApi = this.mui_plugin_transparent = new Transparent(this, options);
-			}
-			transparentApis.push(transparentApi);
-		});
-		return transparentApis.length === 1 ? transparentApis[0] : transparentApis;
-	};
-	$.ready(function() {
-		$('.mui-bar-transparent').transparent();
-	});
-})(mui, window);
 /**
  * 数字输入框
  * varstion 1.0.1

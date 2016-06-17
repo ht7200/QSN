@@ -1,20 +1,169 @@
 {
 	"index.html": {
 		"resources": [
+			"css/index.css",
 			"js/mui.min.js",
 			"js/jquery-1.9.1.min.js",
-			"css/mui.min.css"
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"img/logo.png",
+			"js/config.js",
+			"index.html"
 		],
 		"refer": [
-			"naires.html",
-			"CreateQst.html"
+			"Register.html",
+			"Main.html",
+			"barcode_scan_login.html",
+			"testBarCode.html"
 		]
 	},
-	"naires.html": {
+	"Register.html": {
 		"resources": [
 			"fonts/mui.ttf",
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"js/jquery-1.9.1.min.js",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": [
+			"barcode_scan.html",
+			"Main.html"
+		]
+	},
+	"Main.html": {
+		"resources": [
+			"css/AppCss.css",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/menu.css",
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"css/mui.min.css",
+			"js/config.js",
+			"fonts/iconfont.ttf",
+			"img/shuijiao.jpg"
+		],
+		"refer": [
+			"index.html",
+			"GSQDSurvery.html",
+			"personal.html",
+			"PainSurvery.html",
+			"question.html"
+		]
+	},
+	"barcode_scan_login.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"js/config.js"
+		],
+		"refer": [
+			"Main.html",
+			"index.html"
+		]
+	},
+	"GSQDSurvery.html": {
+		"resources": [
+			"js/My97DatePicker/WdatePicker.js",
+			"js/My97DatePicker/skin/WdatePicker.css",
+			"css/AppCss.css",
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"css/menu.css",
+			"fonts/iconfont.ttf",
+			"js/config.js",
+			"js/My97DatePicker/skin/datePicker.gif",
+			"js/highstock.js",
+			"js/My97DatePicker/lang/zh-cn.js",
+			"js/My97DatePicker/skin/default/datepicker.css",
+			"js/My97DatePicker/skin/default/img.gif",
+			"js/My97DatePicker/calendar.js"
+		],
+		"refer": [
+			"index.html",
+			"PainSurvery.html",
+			"question.html",
+			"Main.html"
+		]
+	},
+	"personal.html": {
+		"resources": [
+			"css/AppCss.css",
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"css/menu.css",
+			"fonts/iconfont.ttf",
+			"js/config.js"
+		],
+		"refer": [
+			"Main.html",
+			"index.html",
+			"barcode_scan.html",
+			"GSQDSurvery.html",
+			"PainSurvery.html",
+			"question.html"
+		]
+	},
+	"PainSurvery.html": {
+		"resources": [
+			"js/My97DatePicker/WdatePicker.js",
+			"css/AppCss.css",
+			"js/My97DatePicker/skin/datePicker.gif",
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"css/iconfont.css",
+			"css/mui.min.css",
+			"css/menu.css",
+			"js/My97DatePicker/skin/WdatePicker.css",
+			"js/highstock.js",
+			"js/config.js",
+			"js/My97DatePicker/lang/zh-cn.js",
+			"js/My97DatePicker/skin/default/datepicker.css",
+			"js/My97DatePicker/skin/default/img.gif",
+			"js/My97DatePicker/calendar.js",
+			"fonts/mui.ttf",
+			"fonts/iconfont.ttf"
+		],
+		"refer": [
+			"GSQDSurvery.html",
+			"personal.html",
+			"Main.html",
+			"index.html",
+			"question.html"
+		]
+	},
+	"testBarCode.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		],
+		"refer": []
+	},
+	"question.html": {
+		"refer": [
+			"index.html",
+			"CreateQst.html",
+			"edit_Qst.html",
+			"reply.html",
+			"Main.html",
+			"PainSurvery.html",
+			"personal.html"
+		],
+		"resources": [
+			"css/AppCss.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/menu.css",
+			"fonts/iconfont.ttf",
+			"js/jquery-1.9.1.min.js",
+			"css/mui.min.css",
+			"js/config.js"
 		]
 	},
 	"CreateQst.html": {
@@ -22,19 +171,24 @@
 			"js/mui.min.js",
 			"js/jquery-1.9.1.min.js",
 			"css/mui.min.css",
-			"js/config.js"
+			"js/config.js",
+			"fonts/mui.ttf"
 		],
 		"refer": [
-			"thanks.html",
 			"question_bank.html"
 		]
 	},
 	"question_bank.html": {
 		"resources": [
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/jquery-1.9.1.min.js",
+			"js/config.js"
 		],
 		"refer": [
-			"createQs.html"
+			"createQs.html",
+			"question.html"
 		]
 	},
 	"createQs.html": {
@@ -42,7 +196,95 @@
 			"js/mui.min.js",
 			"js/jquery-1.9.1.min.js",
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": [
+			"question_bank.html"
+		]
+	},
+	"edit_Qst.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": [
+			"createQs.html",
+			"QstInfor.html",
+			"Main.html"
+		]
+	},
+	"reply.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"css/mui.min.css",
+			"js/config.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"naires.html"
+		]
+	},
+	"naires.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"css/mui.min.css",
+			"js/config.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"thanks.html"
+		]
+	},
+	"QstInfor.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"css/mui.min.css",
+			"js/config.js",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"QsList.html"
+		]
+	},
+	"QsList.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": [
+			"editQs.html"
+		]
+	},
+	"editQs.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": [
+			"QsList.html"
+		]
+	},
+	"thanks.html": {
+		"refer": [
+			"index.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.9.1.min.js",
+			"css/mui.min.css",
+			"img/thank.png"
 		]
 	}
 }

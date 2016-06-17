@@ -8,14 +8,44 @@
 		<script src="js/mui.min.js"></script>
 		<script src="js/config.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/AppCss.css" rel="stylesheet" />
 		<link href="css/menu.css" rel="stylesheet" />
 		<link href="css/iconfont.css" rel="stylesheet" />
-		<link href="css/changebed.css" rel="stylesheet" />
-		<link href="css/AppCss.css" rel="stylesheet" />
 		<script src="js/My97DatePicker/WdatePicker.js"></script>
 		<script type="text/javascript" charset="UTF-8">
 			mui.init();
 		</script>
+
+		<style type="text/css">
+				.mui-icon {
+				margin-right: 1em;
+			}
+			
+			.mui-btn {
+				width: 160px;
+				height: 40px;
+				line-height: 0px;
+				margin: 0px;
+			}
+			
+			.m-btn {
+				width: 100%;
+				height: 50px;
+				line-height: 0px;
+			}
+			
+			.mui-card {
+				margin-bottom: 1em;
+			}
+			
+			.pickDate {
+				display: none;
+			}
+			
+			.pickDate li {
+				height: 60px;
+				line-height: 60px;
+		</style>
 	</head>
 
 	<body>
@@ -41,7 +71,7 @@
 							</li>
 							<li class="mui-table-view-cell" id='SysUser'>
 								<a class="mui-navigate-right">
-									<span class="mui-icon iconfont icon-shujuluru"></span>个人信息</a>
+									<span class="mui-icon iconfont icon-icon10"></span>个人信息</a>
 
 							</li>
 							<li class="mui-table-view-cell" id='SweepYard'>
@@ -50,11 +80,11 @@
 							</li>
 							<li class="mui-table-view-cell" id='Pain_Evaluate'>
 								<a class="mui-navigate-right">
-									<span class="mui-icon iconfont icon-chuang"></span>疼痛自评</a>
+									<span class="mui-icon iconfont icon-huozaiyiwaishenguhuoshangcan"></span>疼痛自评</a>
 							</li>
 							<li class="mui-table-view-cell" id='Contraction_Evaluate'>
 								<a class="mui-navigate-right">
-									<span class="mui-icon iconfont icon-muying"></span>宫缩自评</a>
+									<span class="mui-icon iconfont icon-icon26"></span>宫缩自评</a>
 							</li>
 						</ul>
 					</div>
@@ -63,30 +93,30 @@
 			<div class="mui-inner-wrap">
 				<header class="mui-bar mui-bar-nav">
 					<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
-					<h1 class="mui-title">宫缩强度查看与修改</h1>
+					<h1 class="mui-title">疼痛自评</h1>
 				</header>
 
 				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper" style="background-color:#FEDFE4;">
 					<div class="mui-scroll">
 						<br />
-						<button class="mui-btn mui-btn-block mui-btn-primary" id="btnInsert">录入疼痛评分</button>
-						<table>
-							<tbody>
-								<tr>
-									<th>开始日期</th>
-									<td>
-										<input type="text" id="beginDate" readonly="readonly" name="endDate" class="Wdate" onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'endDate\')}'} )" />
-									</td>
-								</tr>
-								<tr>
-									<th>结束日期</th>
-									<td>
-										<input type="text" id="endDate" readonly="readonly" name="endDate" class="Wdate" onclick="WdatePicker({startDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'beginDate\')}'})" />
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<button class="mui-btn mui-btn-block mui-btn-primary" id="btnWeek">查看疼痛评分数据</button>
+						<div class="mui-card ">
+							<button class="mui-btn mui-btn-block mui-btn-warning m-btn" id="btnpick">查看疼痛评分数据</button>
+							<ul class="mui-table-view mui-table-view-i pickDate">
+								<h5 class="mui-content-padded">请选择查询时间段：</h5>
+								<li class="mui-table-view-cell wcList ShowAll">
+									开始时间：
+									<button id='startDate' type="button" class="mui-btn mui-btn-block">选择日期</button>
+								</li>
+								<li class="mui-table-view-cell wcList ShowAll">
+									截止时间：
+									<button id='endDate' type="button" class="mui-btn mui-btn-block">选择日期</button>
+								</li>
+								<button class="mui-btn mui-btn-block mui-btn-warning m-btn" id="btnWeek">查询</button>
+							</ul>
+						</div>
+						<div class="mui-card ">
+							<button class="mui-btn mui-btn-block mui-btn-primary m-btn" id="btnInsert">录入疼痛评分</button>
+						</div>
 						<div id="container"></div>
 					</div>
 				</div>
@@ -117,29 +147,30 @@
 				$("#endDate").val(dateend)
 				LoadData(startDate, endDate);
 			}
-			
-			$("#btnWeek").click(function(){
+
+			$("#btnpick").click(function() {
+				$(".pickDate").slideToggle();
+			})
+
+			$("#btnWeek").click(function() {
 				OtherData = new Array();
-			    OtherTime = new Array();
-			    if($("#beginDate").val() == "")
-			    {
-			        var startdate = new Date();
-			        var enddate = new Date();
-			        LoadData(startdate,enddate);
-			    }
-			    else if($("#endDate").val() == "")
-			    {
-			        //alert("请输入结束日期");
-			        plus.nativeUI.toast("请输入结束日期");
-			    }
-			    else
-			    {
-			        var startdate = new Date($("#beginDate").val());
-			        var enddate = new Date($("#endDate").val());
-			       // alert(startdate+","+enddate);
-			        LoadData(startdate,enddate);       
-			    }
+				OtherTime = new Array();
+				if ($("#startDate").innerText == "您没有选择日期") {
+					var startdate = new Date();
+					var enddate = new Date();
+					LoadData(startdate, enddate);
+				} else if ($("#endDate").innerText == "您没有选择日期") {
+					//alert("请输入结束日期");
+					plus.nativeUI.toast("请输入结束日期");
+				} else {
+					//					var startDate = document.getElementById("startDate").innerText;
+					//					var endDate = document.getElementById("endDate").innerText;
+					LoadData(st, ed);
+					//alert(st+','+ ed);
+				}
+
 			});
+
 			function LoadData(startdate, enddate) //i用来标记前几天的数据，取值0，1，2，3，4，5，6，7
 			{
 				var startDate = new Date(startdate);
@@ -278,14 +309,23 @@
 				});
 			}
 			mui.plusReady(function() {
-				var user = window.localStorage["UserGuid"];
+				var user = window.localStorage["UserNAME"];
 				$("#NowUser").html(user);
 				GetWGSQDData();
 				SetPage();
 				//返回键的使用
+				var backButtonPress = 0;
 				mui.back = function(event) {
-					var view = plus.webview.currentWebview();
-					plus.webview.open("/index.html");
+					backButtonPress++;
+					if (backButtonPress > 1) {
+						plus.runtime.quit();
+					} else {
+						plus.nativeUI.toast('再按一次退出应用');
+					}
+					setTimeout(function() {
+						backButtonPress = 0;
+					}, 1000);
+					return false;
 				};
 			});
 			$("#UserPage").click(function() {
@@ -299,7 +339,7 @@
 				});
 			})
 			mui.init({
-				
+
 				swipeBack: false,
 			});
 			mui(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
@@ -385,9 +425,9 @@
 				//e.detail.gesture.preventDefault(); //修复iOS 8.x平台存在的bug，使用plus.nativeUI.prompt会造成输入法闪一下又没了
 				var btnArray = ['取消', '确定'];
 				mui.prompt('请输入疼痛评分：', '0', '请输入疼痛评分', btnArray, function(e) {
-					if (e.index == 1 ) {
+					if (e.index == 1) {
 						if (!isNaN(e.value)) {
-							if(e.value<=10 && e.value>=0){
+							if (e.value <= 10 && e.value >= 0) {
 								var myDate = new Date();
 								var date = dateToStr(myDate);
 								var point = e.value;
@@ -412,13 +452,10 @@
 										}
 									}
 								})
-							}
-							else
-							{
+							} else {
 								plus.nativeUI.toast("请输入0-10之间的数字");
 							}
-						} 
-						else {
+						} else {
 							//alert("请输入合法的数字");
 							plus.nativeUI.toast("只能输入数字");
 						}
@@ -455,6 +492,63 @@
 				// alert(time);
 				return time;
 			}
+
+			var st = null;
+			var ed = null;
+			(function($, doc) {
+				window.localStorage["QS_GUID"] = "";
+				var dDate = new Date()
+				var day = dDate.getDate(),
+					month = dDate.getMonth(),
+					year = dDate.getFullYear();
+
+				document.getElementById("startDate").addEventListener('tap', function() {
+					var dDate = new Date();
+					dDate.setFullYear(year, month, day);
+					var minDate = new Date();
+					minDate.setFullYear(2016, 5, 8);
+					var maxDate = new Date();
+					maxDate.setFullYear(2018, 12, 31);
+					plus.nativeUI.pickDate(function(e) {
+						var d = e.date;
+						st = d;
+						//info.innerText = '' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+						document.getElementById("startDate").innerText = '' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					}, function(e) {
+						//info.innerText = "您没有选择日期";
+						document.getElementById("startDate").innerText = "您没有选择日期";
+					}, {
+						title: "请选择日期",
+						date: dDate,
+						minDate: minDate,
+						maxDate: maxDate
+					});
+				})
+
+				document.getElementById("endDate").addEventListener('tap', function() {
+					var dDate = new Date();
+					dDate.setFullYear(year, month, day);
+					var minDate = new Date();
+					minDate.setFullYear(2016, 5, 8);
+					var maxDate = new Date();
+					maxDate.setFullYear(2018, 12, 31);
+					plus.nativeUI.pickDate(function(e) {
+						var d = e.date;
+						ed = d;
+						//info.innerText = '' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+						document.getElementById("endDate").innerText = '' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					}, function(e) {
+						//info.innerText = "您没有选择日期";
+						document.getElementById("endDate").innerText = "您没有选择日期";
+					}, {
+						title: "请选择日期",
+						date: dDate,
+						minDate: minDate,
+						maxDate: maxDate
+					});
+				})
+
+			}(mui, document));
 		</script>
 	</body>
 

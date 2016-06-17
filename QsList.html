@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/config.js"></script>
+		<style>
+			.mui-title {
+				color: #fff;
+			}
+			
+			.mui-bar {
+				background-color: #FFA1BC;
+			}
+			
+			.mui-content h5 {
+				/*text-indent: 2em; //首行缩进  */
+				line-height: 1.4em;
+				font-size: 1em;
+				color: #4f4f44
+			}
+			
+			.mui-input-group {
+				background-color: #efeff4;
+			}
+			
+			.mui-content label {
+				color: #797979;
+				font-size: .8em;
+			}
+			
+			.mui-checkbox {
+				width: 145px;
+				float: right;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: 31px;
+			}
+			
+			.sieve {
+				width: 100%;
+				height: 50px;
+				z-index: 10;
+				position: fixed;
+				top: 40px;
+				padding: 5px;
+				background-color: #F7F7F7;
+			}
+			
+			.mui-search {
+				width: 35%;
+				margin-top: 5px;
+				display: inline-block;
+				float: right;
+			}
+			
+			.pagination {
+				margin-top: 4em;
+				width: 100%;
+				text-align: center;
+			}
+			
+			#addQs {
+				display: inline-block;
+				float: left;
+				margin: 20px;
+				margin-left: 10px;
+			}
+			
+			#submit {
+				float: right;
+				margin: 20px;
+				margin-right: 10px;
+			}
+			
+			.margin-t {
+				margin-top: 47px;
+			}
+		</style>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
+			<h1 class="mui-title">梅叶医疗调查问卷</h1>
+		</header>
+	</body>
+	<div class="mui-content margin-t">
+		<div class="sieve">
+			<h4>问题列表：</h4>
+		</div>
+		<form class="mui-input-group" id="QsContent">
+			<!--<li class="mui-table-view-cell" title="value">
+				<div class="mui-slider-handle">
+					<h5 class="mui-content-padded">如果您有孩子，您会在儿童节或者其他时候带他（她）去游乐园吗？
+				</div>
+			</li>
+			<li class="mui-table-view-cell" >
+				<div class="mui-slider-handle">
+					<h5 class="mui-content-padded">如果您有孩子，您会在购买以下哪种品牌的奶粉？
+				</div>
+			</li>-->				
+		</form>
+		<!--<span class="mui-icon mui-icon-plusempty"></span>-->
+
+	</div>
+	<script type="text/javascript">
+		var htmlQs = "";
+		$().ready(function(){
+			var qstGuid =window.localStorage["QST_GUID"];
+			$("#QsContent").html("");
+			htmlQs = "<ul id='OA_task_1' class='mui-table-view'>";
+			//alert(qstGuid);
+			$.ajax({
+				data: "{id:'"+qstGuid+"'}",
+				type: "post",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: GetQst_Qs_url,
+				success: function(MyJson) { //获得属于该问卷的所有问题的guid
+					var MyData = MyJson.d;
+					MyData = eval(MyData);
+					$.each(MyData, function(i, qsData) {
+						loadData(qsData.QS_GUID);		
+					});
+					htmlQs+="</ul>";
+					$("#QsContent").html(htmlQs);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}
+			});
+		});
+		
+		
+		
+		function loadData(qsGuid) {
+			$.ajax({
+				data: "{id:'"+qsGuid+"'}",
+				type: "POST",
+				dataType: "json",
+				contentType: "application/json;utf-8",
+				async:false,
+				url: GetQs_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					if (MyJson == "-1") {
+						alert("失败");
+					} else {
+						var MyData = MyJson.d;
+						MyData = eval(MyData);
+						$.each(MyData, function(i, qsData) {	
+							htmlQs+="<li class='mui-table-view-cell'>";
+							htmlQs+="<div class='mui-slider-handle' onclick=\"EditQs('" + qsData.QS_GUID + "')\">";  
+							htmlQs+="<h5 class='mui-content-padded'>";
+							htmlQs+=qsData.QS_Title;
+							htmlQs+="</h5>";
+							htmlQs+="</div>";
+							htmlQs+="</li>";
+						})
+						
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					$("div").html(textStatus);
+					$("div").append("<br/>" + XMLHttpRequest.status);
+					$("div").append("<br/>" + XMLHttpRequest.readyState);
+					$("div").append("<br/>" + XMLHttpRequest.responseText);
+					$("div").append("<br/>" + errorThrown);
+				}
+			})
+		}
+		
+		function EditQs(guid)
+		{
+			window.localStorage["QS_GUID"] = guid;
+			plus.webview.open("/editQs.html");
+			//把选择的问卷存储到数据库中
+			/*$.ajax({
+				data: "{userid:'"+userid+"',qst:'" + guid + "'}",
+				type: "post",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: MakeUser_Qst_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					var MyData = MyJson.d;
+					//MyData = eval(MyData);
+					//alert(MyJson.d);
+					window.localStorage["UQI_GUID"] = MyData;
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}
+			});
+			plus.webview.open("/naires.html");*/
+		}
+		
+	</script>
+	</body>
+
+</html>

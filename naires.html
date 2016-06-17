@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html>
 
 	<head>
@@ -6,6 +6,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<script src="js/mui.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/jquery-1.9.1.min.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<style>
 			.mui-title {
@@ -54,6 +56,13 @@
 				margin-left: 100px;
 				width: 100px;
 			}
+			
+			#submit{
+				width: 50%;
+				margin-top: 3em;
+				margin-bottom: 4em;
+				
+			}
 		</style>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
@@ -68,150 +77,201 @@
 		</header>
 	</body>
 	<div class="mui-content">
-		<div class="qsTitle">
-			<h4>挖掘机技术哪家强</h4>
+		<div class="qsTitle" id="Qst_title">
+			
 		</div>
 		<div class="qsInfo">
-			<h5>挖掘机技术哪家强,中国山东找蓝翔</h5>
+			<h5>本量表包含20个项目，分为4级评分，请您仔细阅读以下内容，根据最近一星期的情况如实回答。</h5>
 		</div>
-		<form class="mui-input-group">
-			<div class="mui-card">
-				<h5 class="mui-content-padded">如果您有孩子，您会在儿童节或者其他时候带他（她）去游乐园吗？</h5>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>会</label>
-					<input name="radio1" type="radio" checked>
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>不会</label>
-					<input name="radio1" type="radio">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>不清楚</label>
-					<input name="radio1" type="radio">
-				</div>
-				<div class="mui-input-row mui-radio mui-left">
-					<label>首先要有女朋友</label>
-					<input name="radio1" type="radio">
-				</div>
-			</div>
+		<div id="qst_problem">
 			
-			<div class="mui-card">
-				<h5 class="mui-content-padded"><i></i>如果您有孩子，您会在购买以下哪种品牌的奶粉？</h5>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>三鹿</label>
-					<input name="checkbox" value="Item 1" type="checkbox" checked>
-				</div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>雀巢</label>
-					<input name="checkbox" value="Item 2" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>雅培</label>
-					<input name="checkbox" value="Item 1" type="checkbox">
-				</div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label>首先要有女朋友</label>
-					<input name="checkbox" value="Item 2" type="checkbox">
-				</div>
-			</div>
-		</form>
-		<div class="mui-card">
+			
+		</div>
+		
+		<!--<div class="mui-card">
 			<div class="mui-input-row" style="margin: 10px 5px;">
 				<h5 class="mui-content-padded">提出您的宝贵建议：</h5>
 				<textarea class="textarea" id="textarea" rows="5" placeholder="来吐槽吧O(∩_∩)O！"></textarea>
 			</div>
-		</div>
+		</div>-->
 		
-		<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" id="next">
-					下一页
-				</button>
-		<button type="button" class="mui-btn mui-btn-success mui-btn-outlined" id="submit">
+		<button type="button" class="mui-btn mui-btn-success" id="submit">
 					完成提交
-				</button>
-
-		<div class="pagination">
-			<ul class="mui-pagination">
-				<li class="mui-previous mui-disabled">
-					<a href="#">
-							&laquo;
-						</a>
-				</li>
-				<li class="mui-active">
-					<a href="#">
-							1
-						</a>
-				</li>
-				<li>
-					<a href="#">
-							2
-						</a>
-				</li>
-				<li>
-					<a href="#">
-							3
-						</a>
-				</li>
-				<li>
-					<a href="#">
-							4
-						</a>
-				</li>
-				<li>
-					<a href="#">
-							5
-						</a>
-				</li>
-				<li class="mui-next">
-					<a href="#">
-							&raquo;
-						</a>
-				</li>
-			</ul>
-		</div>
-		<!--<p id="info"></p>-->
+		</button>
 	</div>
 	<script type="text/javascript">
-		(function($) {
-			$('.mui-pagination').on('tap', 'a', function() {
-				var li = this.parentNode;
-				var classList = li.classList;
-				if (!classList.contains('mui-active') && !classList.contains('mui-disabled')) {
-					var active = li.parentNode.querySelector('.mui-active');
-					if (classList.contains('mui-previous')) { //previous
-						if (active) {
-							var previous = active.previousElementSibling;
-							if (previous && !previous.classList.contains('mui-previous')) {
-								$.trigger(previous.querySelector('a'), 'tap');
-							} else {
-								classList.add('mui-disabled');
-							}
-						}
-					} else if (classList.contains('mui-next')) { //next
-						if (active) {
-							var next = active.nextElementSibling;
-							if (next && !next.classList.contains('mui-next')) {
-								$.trigger(next.querySelector('a'), 'tap');
-							} else {
-								classList.add('mui-disabled');
-							}
-						}
-					} else { //page
-						active.classList.remove('mui-active');
-						classList.add('mui-active');
-						var page = parseInt(this.innerText);
-						var previousPageElement = li.parentNode.querySelector('.mui-previous');
-						var nextPageElement = li.parentNode.querySelector('.mui-next');
-						previousPageElement.classList.remove('mui-disabled');
-						nextPageElement.classList.remove('mui-disabled');
-						if (page <= 1) {
-							previousPageElement.classList.add('mui-disabled');
-						} else if (page >= 5) {
-							nextPageElement.classList.add('mui-disabled');
-						}
-					}
+		//获得问卷的guid
+		$().ready(function(){
+			var qstGuid = window.localStorage["QST_GUID"];
+			$.ajax({
+				data: "{id:'"+qstGuid+"'}",
+				type: "post",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: GetQsTime_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					var MyData = MyJson.d;
+					MyData = eval(MyData);
+					$("#Qst_title").html("");
+					var qst_title = "";
+					$.each(MyData, function(i, qsData) {
+						qst_title += "<h4>";
+						qst_title += qsData.QST_Title;
+						qst_title += "</h4>";
+					});
+					$("#Qst_title").html(qst_title);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
 				}
 			});
-		})(mui);
+		});
+		var qst_problem = "";
+		$().ready(function(){
+			var qstGuid =window.localStorage["QST_GUID"];
+			//alert(qstGuid);
+			$.ajax({
+				data: "{id:'"+qstGuid+"'}",
+				type: "post",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: GetQst_Qs_url,
+				success: function(MyJson) { //获得属于该问卷的所有问题的guid
+					var MyData = MyJson.d;
+					MyData = eval(MyData);
+					$("#qst_problem").html("");
+					$.each(MyData, function(i, qsData) {
+						LoadQs(qsData.QS_GUID);		
+					});
+					
+					$("#qst_problem").html(qst_problem);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}
+			});
+		});
+		var qs_guid = new Array();
+	
+		
+		function LoadQs(guid){
+			$.ajax({
+				data: "{id:'"+guid+"'}",
+				type: "post",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: GetQs_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					var MyData = MyJson.d;
+					MyData = eval(MyData);
+					$.each(MyData, function(i, qsData) {
+						qst_problem+="<form class='mui-input-group'>";
+						qst_problem += "<div class='mui-card' id='qs'>";
+						qst_problem += "<h5 class='mui-content-padded'>";
+						qst_problem += qsData.QS_Title;
+						qst_problem += "</h5>";
+						LoadChoice(qsData.QS_GUID);
+						qs_guid.push(qsData.QS_GUID);
+						for(var i=0;i<choices.length;i++)
+						{
+							qst_problem += "<div class='mui-input-row mui-radio mui-left'><label>";
+							qst_problem+= choices[i];
+							qst_problem+="</label>";
+							qst_problem+="<input name='radio1' type='radio' title='"+mychoiceguid[i]+"' value='"+choices[i]+"'>";
+							qst_problem +="</div>";
+						}
+						qst_problem += "</div>";
+						qst_problem +="</form>";
+					});
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}
+			});
+		}
+		var choices = new Array();
+		var mychoiceguid = new Array();;
+		function LoadChoice(guid){ //加载某道题的所有选项
+			choices.splice(0,choices.length);
+			mychoiceguid.splice(0,mychoiceguid.length);
+			$.ajax({
+				data: "{id:'"+guid+"'}",
+				type: "post",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: GetAnswer_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					var MyData = MyJson.d;
+					MyData = eval(MyData);
+					$.each(MyData, function(i, qsData) {
+						choices.push(qsData.AI_Content);
+						mychoiceguid.push(qsData.AI_GUID);
+					});
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}
+			});
+		}
+		
+		$("#submit").click(function(){
+			var uqi_GUID = window.localStorage["UQI_GUID"]
+			var answer = submitqs();
+			//alert(answer.length);
+			var ai_guid = new Array();
+			var ai_content = new Array();
+			var count = 0;//记录题量
+			for(var i=0;i<answer.length;i+=2)
+			{
+				ai_guid[count] = answer[i];
+				ai_content[count++] = answer[i+1];
+			}
+			for(var i=0;i<qs_guid.length;i++)
+			{
+				submitAns(uqi_GUID,ai_guid[i],ai_content[i],qs_guid[i]);  
+			}
+			plus.nativeUI.toast("用户答案提交成功!");
+			plus.webview.open("/thanks.html"); 
+		})
+		
+		function submitAns(uqi_GUID,ai_guid,ai_content,qs_guid){
+			$.ajax({
+				data: "{uqiguid:'"+uqi_GUID+"',ai_guid:'" + ai_guid + "',ai_content:'" + ai_content + "',qs_guid:'" + qs_guid + "'}",
+				type: "post",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: CreateUserAnswer_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					var MyData = MyJson.d;
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}
+			});
+		}
+		
+		function submitqs() { //仅单选题可用 
+
+			var answer = new Array();
+			var answer = [];
+			var n = 0;
+
+			$("#qs input").each(function() {
+				if ($(this).is(':checked')) {
+					//if($(this).attr("type")=="checkbox")						
+					answer.push($(this).attr("title"));
+					answer.push($(this).attr("value"));
+					 n++;
+				}
+			})
+			return answer;
+		}
+		
 	</script>
 	</body>
 

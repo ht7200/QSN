@@ -18,7 +18,7 @@
 		<div class="logo">
 			<img src="img/logo.png" alt="logo" />
 		</div>
-		<h1 class="mui-title">围产移动管理系统</h1>
+		<h1 class="mui-title">梅叶妇幼保健管理平台</h1>
 	</header>
 	<div class="mui-content">
 		<form id='login-form' class="mui-input-group">
@@ -88,9 +88,15 @@
 	            url: Login_url, 
 	            success: function (MyJson) { //回调函数，MyJson，返回值
 	                var result = MyJson.d;
+	                var MyData = eval(result);
 	                if (result.indexOf("不存在") < 0 && result.indexOf("错误") < 0) {
-                        window.localStorage["UserGuid"] = result; 
-                    	plus.webview.open("/Main.html");
+                       $.each(MyData, function(i, UserData) {
+							//alert(UserData.User_NAME);
+							window.localStorage["UserGuid"] = UserData.User_GUID; 
+							window.localStorage["UserNAME"] = UserData.User_NAME;
+	                    	plus.webview.open("/Main.html");
+						});
+
                     //uexWindow.evaluateScript("Main","0","location.reload();");
                 	}
                 	else{

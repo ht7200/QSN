@@ -246,6 +246,10 @@
             var address = $("#Hospital_Address").val();
             var guid = window.localStorage["ScanGuid"];//= $("#PatientGUID").val();
             //alert(userID+","+Pwd+","+Name+","+Sex+","+Birthday+","+Phonenum+","+ID_No+","+Imei+","+address+","+guid);
+            if(Name == "")
+            {
+            	Name = "游客";
+            }
             
             $.ajax({
                 async: false,
@@ -272,6 +276,7 @@
                         	plus.nativeUI.toast("注册成功");
                         	plus.webview.open("/Main.html");
                         	window.localStorage["UserGuid"] = userID;
+                        	window.localStorage["UserNAME"] = Name;
                         }
                     }
                 }

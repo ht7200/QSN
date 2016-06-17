@@ -1,0 +1,32 @@
+	.offtitle {
+		margin: 25px 15px 10px;
+		text-align: center;
+		font-size: 1.3em;
+		margin-bottom: 25px;
+		color: #FFFFFF;
+	}
+	
+	.offgrid {
+		background-color: #333;
+		padding-bottom: 0px;
+	}
+	
+	.offgrid span {
+		color: #fff;
+		font-size: .8em;
+	}
+	.xian{
+		border-right: solid 1px white;
+	}
+	
+	.mui-bar{
+		background-color: #FFA1BC;	
+	}
+	
+	 h1,a{
+		color: #FFF;
+	}
+	
+	.mui-title {
+				color: #fff;
+			}

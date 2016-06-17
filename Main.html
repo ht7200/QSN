@@ -1,157 +1,230 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="js/mui.min.js"></script>
-    <script src="js/jquery-1.9.1.min.js"></script>
-    <script src="js/config.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
-    <link href="css/menu.css" rel="stylesheet" />
-    <link href="css/iconfont.css" rel="stylesheet"/>
-    <link href="css/changebed.css" rel="stylesheet"/>
-    <link href="css/AppCss.css" rel="stylesheet" /> 
-    <script type="text/javascript" charset="UTF-8">
-      	mui.init();
-    </script>
-</head>
-<body >
-	<div class="mui-off-canvas-wrap mui-draggable" id='offCanvasWrapper'>
-		<aside id="offCanvasSide" class="mui-off-canvas-left ">
-			<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<div class="offtitle">主菜单</div>
 
-					<ul class="mui-table-view mui-grid-view offgrid" id="UserPage">
-						<li class="mui-table-view-cell mui-col-xs-5 mui-col-sm-5" >
-							<a href="#">
-								<div class="mui-media-body"><span>当前用户：</span></div>
-								<div class="mui-media-body"><span id="NowUser"></span></div>
-							</a>
-						</li>
-					</ul>
-					<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted">
-						<li class="mui-table-view-cell" id="HomePage">
-							<a class="mui-navigate-right">
-								<span class="mui-icon iconfont icon-home"></span> 系统主页
-							</a>
-						</li>
-						<li class="mui-table-view-cell" id='SysUser'> 
-							<a class="mui-navigate-right">
-								<span class="mui-icon iconfont icon-shujuluru"></span>个人信息</a>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/config.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/AppCss.css" rel="stylesheet" />
+		<link href="css/menu.css" rel="stylesheet" />
+		<link href="css/iconfont.css" rel="stylesheet" />
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+		</script>
+		<style type="text/css">
+			.mui-table-view-inverted .mui-icon {
+				margin-right: 1em;
+			}
+			
+			img {
+				max-width: 100%;
+				height: auto;
+			}
+			
+			.mui-content-padded {
+				text-align: center;
+			}
+			
+			.mui-media span{
+				color: #FFA1BC;
+			}
+		</style>
+	</head>
 
-						</li>
-						<li class="mui-table-view-cell" id='SweepYard'>
-							<a class="mui-navigate-right">
-								<span class="mui-icon iconfont icon-icon20"></span>问卷调查</a>
-						</li>
-						<li class="mui-table-view-cell" id='Pain_Evaluate'>
-							<a class="mui-navigate-right">
-								<span class="mui-icon iconfont icon-chuang"></span>疼痛自评</a>
-						</li>
-						<li class="mui-table-view-cell" id='Contraction_Evaluate'>
-							<a class="mui-navigate-right">
-								<span class="mui-icon iconfont icon-muying"></span>宫缩自评</a>
-						</li>
-					</ul>
+	<body>
+		<div class="mui-off-canvas-wrap mui-draggable" id='offCanvasWrapper'>
+			<aside id="offCanvasSide" class="mui-off-canvas-left ">
+				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="offtitle">主菜单</div>
+
+						<ul class="mui-table-view mui-grid-view offgrid" id="UserPage">
+							<li class="mui-table-view-cell mui-col-xs-5 mui-col-sm-5">
+								<a href="#">
+									<div class="mui-media-body"><span>当前用户：</span></div>
+									<div class="mui-media-body"><span id="NowUser"></span></div>
+								</a>
+							</li>
+						</ul>
+						<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted">
+							<li class="mui-table-view-cell" id="HomePage">
+								<a class="mui-navigate-right">
+									<span class="mui-icon iconfont icon-home"></span> 系统主页
+								</a>
+							</li>
+							<li class="mui-table-view-cell" id='SysUser'>
+								<a class="mui-navigate-right">
+									<span class="mui-icon iconfont icon-icon10"></span>个人信息</a>
+
+							</li>
+							<li class="mui-table-view-cell" id='SweepYard'>
+								<a class="mui-navigate-right">
+									<span class="mui-icon iconfont icon-icon20"></span>问卷调查</a>
+							</li>
+							<li class="mui-table-view-cell" id='Pain_Evaluate'>
+								<a class="mui-navigate-right">
+									<span class="mui-icon iconfont icon-huozaiyiwaishenguhuoshangcan"></span>疼痛自评</a>
+							</li>
+							<li class="mui-table-view-cell" id='Contraction_Evaluate'>
+								<a class="mui-navigate-right">
+									<span class="mui-icon iconfont icon-icon26"></span>宫缩自评</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</aside>
+			<div class="mui-inner-wrap">
+				<header class="mui-bar mui-bar-nav">
+					<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+					<h1 class="mui-title">梅叶妇幼保健管理平台</h1>
+				</header>
+
+				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="mui-content">
+							<div class="mui-content-padded">								
+								<p >
+									<img src="img/11.png"/>
+								</p>
+
+							</div>
+						</div>
+						<ul class="mui-table-view mui-grid-view mui-grid-9">
+
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" id='SysUser'>
+								<a href="#">
+									<span class="mui-icon iconfont icon-gerenxinxi"></span>
+									<div class="mui-media-body">个人信息</div>
+								</a>
+							</li> 
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" id='SweepYard'>
+								<a href="#">
+									<span class="mui-icon iconfont icon-icon20"></span>
+									<div class="mui-media-body">问卷调查</div>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" id='Pain_Evaluate'>
+								<a href="#">
+									<span class="mui-icon iconfont icon-pingjia1"></span>
+									<div class="mui-media-body">疼痛自评</div>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" id='Contraction_Evaluate'>
+								<a href="#">
+									<span class="mui-icon iconfont icon-pingjia"></span>
+									<div class="mui-media-body">宫缩自评</div>
+								</a>
+							</li>
+							<!--<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<span class="mui-icon mui-icon-info"></span>
+									<div class="mui-media-body">about</div>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6">
+								<a href="#">
+									<span class="mui-icon mui-icon-more"></span>
+									<div class="mui-media-body">more</div>
+								</a>
+							</li>-->
+						</ul>
+					</div>
+
 				</div>
 			</div>
-		</aside> 
-		<div class="mui-inner-wrap">
-			<header class="mui-bar mui-bar-nav">
-			    <a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
-			    <h1 class="mui-title">外网移动交互系统</h1>
-			</header>
-			
-			<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper" style="background-color:#FEDFE4;">
-				<div class="mui-scroll">
-					
-				</div>
-			</div>  
-	    </div>
-    </div>
-	
-	<script type="text/javascript">
-		mui.plusReady(function(){
-			
-			var user = window.localStorage["UserGuid"]; 
-			$("#NowUser").html(user);
-			//返回键的使用
-			mui.back = function(event) {
-				var view = plus.webview.currentWebview();
-				
-				plus.webview.open("/index.html");
-			};
-		});
-		
-		$("#UserPage").click(function(){
-			var btnArray = ['否', '是'];
-			mui.confirm('确认重新系统？', '外网移动交互系统', btnArray, function(e) {
-				if (e.index == 1) {
-					plus.webview.open("/index.html");
-				} else {
-					//info.innerText = 'MUI没有得到你的认可，继续加油'
-				}
-			});
-		})
-		
-		mui.init({
-		  swipeBack: false,
-		});
-			
+		</div>
 
-		mui(".mui-table-view").on('tap','.mui-table-view-cell',function(){
-		    //获取id
-		    var id = this.getAttribute("id");
-		    switch(id)
-		    {
-			  	case 'HomePage':	
-			  		plus.webview.open("/Main.html");
-			  		break;
-		  		case 'SysUser':		
-		  			plus.webview.open("/personal.html");
-		  			break;
-		  		case 'SweepYard':	
-		  			//alert("SweepYard");
-		  			plus.webview.open("/question.html");
-		  			break;
-		  		case 'Pain_Evaluate':
-		  			//alert("SweepYard");
-		  			plus.webview.open("/PainSurvery.html");
-		  			//alert('childIndex');
-		  			break;
-		  		case 'Contraction_Evaluate':	  			
-		  			//alert('Contraction_Evaluate');
-		  			plus.webview.open("/GSQDSurvery.html");
-		  			break;
-		  		
+		<script type="text/javascript">
+			mui.plusReady(function() {
+
+				var user = window.localStorage["UserNAME"];
+				$("#NowUser").html(user);
+				//返回键的使用
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					backButtonPress++;
+					if (backButtonPress > 1) {
+						plus.runtime.quit();
+					} else {
+						plus.nativeUI.toast('再按一次退出应用');
+					}
+					setTimeout(function() {
+						backButtonPress = 0;
+					}, 1000);
+					return false;
+				};
+			});
+
+			$("#UserPage").click(function() {
+				var btnArray = ['否', '是'];
+				mui.confirm('确认重新系统？', '外网移动交互系统', btnArray, function(e) {
+					if (e.index == 1) {
+						plus.webview.open("/index.html");
+					} else {
+						//info.innerText = 'MUI没有得到你的认可，继续加油'
+					}
+				});
+			})
+
+			mui.init({
+				swipeBack: false,
+			});
+
+			mui(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
+				//获取id
+				var id = this.getAttribute("id");
+				switch (id) {
+					case 'HomePage':
+						plus.webview.open("/Main.html");
+						break;
+					case 'SysUser':
+						plus.webview.open("/personal.html");
+						break;
+					case 'SweepYard':
+						//alert("SweepYard");
+						plus.webview.open("/question.html");
+						break;
+					case 'Pain_Evaluate':
+						//alert("SweepYard");
+						plus.webview.open("/PainSurvery.html");
+						//alert('childIndex');
+						break;
+					case 'Contraction_Evaluate':
+						//alert('Contraction_Evaluate');
+						plus.webview.open("/GSQDSurvery.html");
+						break;
+
+				}
+			})
+
+			//侧滑容器父节点
+			var offCanvasWrapper = mui('#offCanvasWrapper');
+			//主界面容器
+			var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+			//菜单容器
+			var offCanvasSide = document.getElementById("offCanvasSide");
+			//移动效果是否为整体移动
+			var moveTogether = false;
+			//侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+			var classList = offCanvasWrapper[0].classList;
+			//变换侧滑动画移动效果；
+			offCanvasSide.classList.remove('mui-transitioning');
+			offCanvasSide.setAttribute('style', '');
+			classList.remove('mui-slide-in');
+			classList.remove('mui-scalable');
+			if (moveTogether) {
+				//仅主内容滑动时，侧滑菜单在off-canvas-wrap内，和主界面并列
+				offCanvasWrapper[0].insertBefore(offCanvasSide, offCanvasWrapper[0].firstElementChild);
 			}
-		}) 
-		
-		 //侧滑容器父节点
-		var offCanvasWrapper = mui('#offCanvasWrapper');
-		 //主界面容器
-		var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
-		 //菜单容器
-		var offCanvasSide = document.getElementById("offCanvasSide"); 
-		 //移动效果是否为整体移动
-		var moveTogether = false;
-		 //侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
-		var classList = offCanvasWrapper[0].classList;
-		 //变换侧滑动画移动效果；
-		offCanvasSide.classList.remove('mui-transitioning');
-		offCanvasSide.setAttribute('style', '');
-		classList.remove('mui-slide-in');
-		classList.remove('mui-scalable'); 
-		if (moveTogether) { 
-			//仅主内容滑动时，侧滑菜单在off-canvas-wrap内，和主界面并列
-			offCanvasWrapper[0].insertBefore(offCanvasSide, offCanvasWrapper[0].firstElementChild);
-		}
-		classList.add('mui-scalable');
-		//主菜单和内容页均可以上下滑动
-		mui('#offCanvasSideScroll').scroll();
-		mui('#offCanvasContentScroll').scroll();
-	</script>
-</body>
+			classList.add('mui-scalable');
+			//主菜单和内容页均可以上下滑动
+			mui('#offCanvasSideScroll').scroll();
+			mui('#offCanvasContentScroll').scroll();
+		</script>
+	</body>
+
 </html>

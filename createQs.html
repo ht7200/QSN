@@ -48,7 +48,7 @@
 			
 			#optionbox {
 				margin-top: 2em;
-				display: none;
+				//display: none;
 			}
 			
 			.success {
@@ -119,10 +119,19 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		var mode = -1;
-		var QsArray = new Array();
+		var mode = -1;   
+		var QsArray = "";
+		//存储所有选中的题目
 		var QsData = window.localStorage["QS_GUID"];
-		QsArray = QsData.split(",");
+		if(QsData != "")
+		{
+			QsArray = QsData.split(",");
+		}
+		else
+		{
+			QsArray = new Array();
+		}
+		//alert(QsArray.length);
 		
 		$("#push").click(function(){
 			//题库Guid
@@ -163,7 +172,8 @@
 						plus.nativeUI.toast("题目创建成功");
 						QsArray.push(result);
 						window.localStorage["QS_GUID"] = QsArray;
-						InsertChoice(qstguid);
+						//alert(result);    
+						InsertChoice(result);  
 						var btnArray = ['否', '是'];
 						mui.confirm('是否继续添加题目？', '外网移动交互系统', btnArray, function(e) {
 							if (e.index == 1) {
@@ -237,7 +247,7 @@
 				var nLi = document.createElement("li");
 				nLi.className = "mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4";
 				var nInput = document.createElement("input");
-				nInput.type = "text"; nInput.id = String.fromCharCode(num);
+				nInput.type = "text"; nInput.id = 'q'+String.fromCharCode(num);
 				nLi.innerHTML = String.fromCharCode(num);
 				num++;
 				nLi.appendChild(nInput);
@@ -247,7 +257,7 @@
 				var nLi = document.createElement("li");
 				nLi.className = "mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4";
 				var nInput = document.createElement("input");
-				nInput.type = "text"; nInput.id = String.fromCharCode(num);
+				nInput.type = "text"; nInput.id = 'q'+String.fromCharCode(num);
 				nLi.innerHTML = String.fromCharCode(num);
 				num++;
 				nLi.appendChild(nInput);
@@ -264,38 +274,38 @@
 		
 		function InsertChoice(Guid){
 			var sort = "";
-			var id = Guid;//window.localStorage["QST_GUID"]; // 此id是混进来的！！！
+			var id = Guid;
 			var content = "";
 			for (i = 0; i < $("#ulnode li").length; i++) {
 				var contentChoice = $("#ulnode li input").eq(i).val();
-				var sortContent =  $("#ulnode li input").eq(i).attr("id");
+				//var sortContent =  $("#ulnode li input").eq(i).attr("id");
 				if (contentChoice) {
 					content += contentChoice;
 					content += ",";
-					sort += sortContent;
-					sort += ","
+					sort += i;
+					sort += ",";
 				}
 			}
 			sort = sort.substr(0,sort.length-1);
 			content = content.substr(0,content.length-1);
+			//alert(sort+","+content+","+id); 
 			$.ajax({
-						data: "{id:'" + id + "',content:'" + content + "',sort:'" + sort + "'}",
-						type: "post",
-						dataType: "json",
-						contentType: "application/json;utf-8",
-						url: CreateAnswer_url,
-						success: function(MyJson) { //回调函数，MyJson，返回值
-							var result = MyJson.d;
-							if (result.indexOf("失败") < 0) {
-							} else {
-								alert(result);
-							}
-						},
-						error: function(XMLHttpRequest, textStatus, errorThrown) {
-							alert('访问网络失败！' + errorThrown);
-						}						
-					});
-			
+				data: "{id:'" + id + "',content:'" + content + "',sort:'" + sort + "'}",
+				type: "post",
+				dataType: "json",
+				contentType: "application/json;utf-8",
+				url: CreateAnswer_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					var result = MyJson.d;
+					if (result.indexOf("失败") < 0) {
+					} else {
+						alert(result);
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}						
+			});
 		}
 		
 		/*$("#push").click(function() {

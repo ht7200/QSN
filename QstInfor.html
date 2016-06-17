@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			.mui-bar {
+				background-color: #FFA1BC;
+			}
+			
+			.mui-title {
+				color: #fff;
+			}
+			
+			.mui-card {
+				padding: 5px;
+			}
+			
+			.wcList {
+				height: 50px;
+			}
+			
+			.intro {
+				text-indent: 2em;
+				line-height: 1.5em;
+			}
+			
+			.infor {
+				width: 50%;
+				float: left;
+			}
+			
+			.mui-btn {
+				width: 100px;
+				height: 40px;
+				line-height: 0px;
+				display: inline-block;
+				float: right;
+			}
+			
+			#edit,
+			#question_bank {
+				margin-top: 1em;
+				margin-right: 2em;
+			}
+
+		</style>
+		<script src="js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
+			<h1 class="mui-title">梅叶医疗调查问卷</h1>
+		</header>
+		<div class="mui-content"> 
+			<h5 class="mui-content-padded intro">为了给你提供更优质的服务，请用几分钟的时间完成我们的调查问卷。</h5>
+			<div class="mui-card">
+				<ul class="mui-table-view mui-table-view-i">
+					<li class="mui-table-view-cell ShowAll">
+						问卷标题：
+						<input type="text" id="Qst_title">
+					</li>
+					<li class="mui-table-view-cell wcList ShowAll">
+						开始时间：
+						<button id='startDate' type="button" class="mui-btn mui-btn-block">选择日期</button>
+					</li>
+					<li class="mui-table-view-cell wcList ShowAll">
+						截止时间：
+						<button id='endDate' type="button" class="mui-btn mui-btn-block">选择日期</button>
+					</li>
+
+				</ul>
+			</div>
+			<button type="button" class="mui-btn mui-btn-danger mui-btn-block" id="edit">确认修改</button>
+			<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="question_bank">查看内容</button>
+		</div>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var dDate = new Date()
+			var day = dDate.getDate(),
+			month = dDate.getMonth(),
+			year = dDate.getFullYear();
+			document.getElementById("startDate").addEventListener('tap', function() {
+				var dDate = new Date();
+				dDate.setFullYear(year, month, day);
+				var minDate = new Date();
+				minDate.setFullYear(2016, 5, 8);
+				var maxDate = new Date(); 
+				maxDate.setFullYear(2018, 12, 31);
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					//info.innerText = '' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					document.getElementById("startDate").innerText = '' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+				}, function(e) {
+					//info.innerText = "您没有选择日期";
+					document.getElementById("startDate").innerText = "您没有选择日期";
+				}, {
+					title: "请选择日期",
+					date: dDate,
+					minDate: minDate,
+					maxDate: maxDate
+				});
+			})
+
+			document.getElementById("endDate").addEventListener('tap', function() {
+				var dDate = new Date();
+				dDate.setFullYear(year, month, day);
+				var minDate = new Date();
+				minDate.setFullYear(2016, 5, 8);
+				var maxDate = new Date();
+				maxDate.setFullYear(2018, 12, 31);
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					//info.innerText = '' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					document.getElementById("endDate").innerText = '' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+				}, function(e) {
+					//info.innerText = "您没有选择日期";
+					document.getElementById("endDate").innerText = "您没有选择日期";
+				}, {
+					title: "请选择日期",
+					date: dDate,
+					minDate: minDate,
+					maxDate: maxDate
+				});
+			})
+
+		
+			$().ready(function(){
+				var qstguid = window.localStorage["QST_GUID"];
+				$.ajax({
+					data: "{id:'"+qstguid+"'}", 
+					type: "post",
+					dataType: "json",
+					async:false,
+					contentType: "application/json;utf-8",
+					url: GetQsTime_url,
+					success: function(MyJson) { //回调函数，MyJson，返回值
+						var MyData = MyJson.d;
+						MyData = eval(MyData);
+						$.each(MyData, function(i, qsData) {
+							//alert(qsData.QST_Title);
+							$("#Qst_title").val(qsData.QST_Title);
+							$("#startDate").html(qsData.QST_BeginTime.substr(0,10));
+							$("#endDate").html(qsData.QST_EndTime.substr(0,10));
+						});
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert('访问网络失败！' + errorThrown);
+					}
+				});
+				
+			});
+			
+			
+			function editQst(id,title, beginTime, endTime, status, type) {	
+				//alert(title+","+beginTime+","+endTime);
+				$.ajax({
+					data: "{id:'" + id + "',title:'" + title + "',beginTime:'" + beginTime + "',endTime:'" + endTime + "',status:'" + status + "',type:'" + type + "'}",
+					type: "post",
+					dataType: "json",
+					contentType: "application/json;utf-8", 
+					url: EditQst_url,
+					success: function(MyJson) { //回调函数，MyJson，返回值
+						var result = MyJson.d;
+						if (result.indexOf("失败") < 0 ) {
+							plus.nativeUI.toast(result);
+							//alert(result);
+							//保存问卷的guid
+							//window.localStorage["QST_GUID"] = result;
+							//plus.webview.open("/question_bank.html"); 
+							
+						} else {
+							alert(result);
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert('访问网络失败！' + errorThrown);
+					}
+				});
+			}
+			
+			$("#edit").click(function(){
+				var qstguid = window.localStorage["QST_GUID"];
+				//var userguid = window.localStorage["UserGuid"];
+				var qst_title = document.getElementById("Qst_title").value;
+				var startDate = document.getElementById("startDate").innerText;
+				var endDate = document.getElementById("endDate").innerText;
+				//alert(userguid+","+qst_title+","+startDate+","+endDate);
+				editQst(qstguid,qst_title,startDate,endDate,'','');
+			});
+			
+			$("#question_bank").click(function(){
+				plus.webview.open("/QsList.html");
+			});
+		
+			/*(function($, doc) {
+				window.localStorage["QS_GUID"] = "";
+				var dDate = new Date()
+				var day = dDate.getDate(),
+					month = dDate.getMonth(),
+					year = dDate.getFullYear();
+
+				
+				document.getElementById("question_bank").addEventListener('tap', function(event) {
+					var qst_title = document.getElementById("Qst_title").value;
+					var startDate = document.getElementById("startDate").innerText;
+					var endDate = document.getElementById("endDate").innerText;
+					createQst(qst_title, startDate, endDate, '', '');
+
+				}, false);
+
+			}(mui, document));*/
+		</script>
+	</body>
+
+</html>

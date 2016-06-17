@@ -21,11 +21,16 @@
 				line-height: 1.5em;
 			}
 			
+			.thank,
+			.btn {
+				text-align: center;
+			}
+			
 			.mui-btn {
-				width: 100px;
+				width: 50%;
 				height: 40px;
-				line-height: 20px;
-				margin: 20px 100px;
+				/*line-height: 20px;*/
+				/*margin: 20px 100px;*/
 			}
 		</style>
 		<script src="js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
@@ -42,34 +47,24 @@
 		</header>
 		<div class="mui-content">
 			<h5 class="mui-content-padded intro">已经收到您的反馈，感谢您的配合！</h5>
-			<button type="button" class="mui-btn mui-btn-outlined" id="return">
+			<div class="thank">
+				<img src="img/thank.png" alt="thank" style="display: none;"/>
+
+			</div>
+			<div class="btn">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" id="return" style="display: none;">
 					返回首页
 				</button>
+			</div>
+
 		</div>
 		<script type="text/javascript">
-			(function($, doc) {
-				var returnButton = document.getElementById('return');
-
-				returnButton.addEventListener('tap', function(event) {
-
-					$.openWindow({
-						url: 'index.html',
-						id: 'index',
-						preload: true,
-						show: {
-							aniShow: 'pop-in'
-						},
-						styles: {
-							popGesture: 'hide'
-						},
-						waiting: {
-							autoShow: false
-						}
-					});
-				}, false);
-
-			}(mui, document));
+			$("#return").click(function() {				
+				plus.webview.open("/Main.html");
+			});
 			
+			$(".thank img").delay("slow").slideDown("slow");
+			$("#return").delay("slow").delay("slow").fadeIn("slow");
 		</script>
 	</body>
 

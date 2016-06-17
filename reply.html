@@ -6,8 +6,17 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/config.js"></script>
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/AppCss.css" rel="stylesheet" />
+		<link href="css/menu.css" rel="stylesheet" />
+		<link href="css/iconfont.css" rel="stylesheet" />
 		<style>
+			body {
+				height: 100%;
+				background-color: #FEDFE4; 
+			}
 			.mui-bar {
 				background-color: #FFA1BC;
 			}
@@ -16,8 +25,13 @@
 				color: #fff;
 			}
 			
+			.tt{
+				font-size: 1em; 
+			}
+			
 			.mui-card {
 				padding: 5px;
+				margin-bottom: .5em;
 			}
 			
 			.intro {
@@ -36,6 +50,7 @@
 				line-height: 0px;
 				display: inline-block;
 				float: right;
+				margin-top: .3em;
 			}
 		</style>
 		<script src="js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
@@ -46,12 +61,12 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<!--<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>-->
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
-			<h1 class="mui-title">梅叶医疗调查问卷</h1>
+			<h1 class="mui-title">梅叶医疗调查问卷</h1> 
 		</header>
-		<div class="mui-content">
-			<h5 class="mui-content-padded intro">为了给你提供更优质的服务，请用几分钟的时间完成我们的调查问卷。</h5>
+		<div class="mui-content" id="content" style="background-color:#FEDFE4;">
+			<!--<h5 class="mui-content-padded intro">为了给你提供更优质的服务，请用几分钟的时间完成我们的调查问卷。</h5>
 			<div class="mui-card">
 				<div class="infor">
 					<h6>问卷名称</h6>
@@ -73,47 +88,74 @@
 					<h6>发起时间:</h6>
 				</div>
 				<button type="button" class="mui-btn mui-btn-primary mui-btn-block" id="submit2">开始填写</button>
-			</div>
+			</div>-->
 		</div>
 
 		<script type="text/javascript">
-			(function($, doc) {
-				var submitButton = document.getElementById('submit');
-				var dDate = new Date(); // dDate.getFullYear() dDate.getMonth() dDate.getDate()
-				var day = dDate.getDate(),
-					month = dDate.getMonth() + 1,
-					year = dDate.getFullYear();
-
-				month = (month > 10) ? month : '0' + month;
-				day = (day > 10) ? day : '0' + day;
-				nowDate = '' + year + month + day;
-				var startDate = 20160610;
-				var endDate = 20160614
-				if (startDate > nowDate || endDate < nowDate) {
-					submitButton.style.background = "#ccc";
-					submitButton.style.border = "0";
-				}
-
-				submitButton.addEventListener('tap', function(event) {
-					if (startDate <= nowDate && nowDate <= endDate) {
-						$.openWindow({
-							url: 'naires.html',
-							id: 'naires',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
+			$().ready(function(){
+				LoadData();   
+			}); 
+			
+			function LoadData(){
+				$("#content").html("");
+				$.ajax({
+					data: "{id:''}",
+					type: "post",
+					dataType: "json",
+					async:false,
+					contentType: "application/json;utf-8",
+					url: GetQsTime_url,
+					success: function(MyJson) { //回调函数，MyJson，返回值
+						var MyData = MyJson.d;
+						MyData = eval(MyData);
+						var htmlQs = "<h5 class='mui-content-padded intro'>为了给你提供更优质的服务，请用几分钟的时间完成我们的调查问卷。</h5>";
+						$.each(MyData, function(i, qsData) {
+							htmlQs+="<div class='mui-card'>";
+							htmlQs+="<div class='infor'>";
+							htmlQs+="<h5 class='tt'>";
+							htmlQs+=qsData.QST_Title;
+							htmlQs+="</h5>";
+							htmlQs+="<h6>发起时间:";
+							htmlQs+=qsData.QST_BeginTime;
+							htmlQs+="</h6>";
+							htmlQs+="</div>";
+							htmlQs+="<button type='button' class='mui-btn mui-btn-primary mui-btn-block' title='"+qsData.QST_BeginTime+"' name='"+qsData.QST_BeginTime+"' id='"+qsData.QST_GUID+"' onclick=\"BeginReply('" + qsData.QST_GUID + "')\">"
+							htmlQs+="开始填写</button>"
+							htmlQs+="</div>";
 						});
-					} else mui.toast('对不起，该问卷不在调查时间');
-				}, false);
-
-			}(mui, document));
+						
+						$("#content").html(htmlQs);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert('访问网络失败！' + errorThrown);
+					}
+				});
+			}
+			
+			function BeginReply(guid)
+			{
+				window.localStorage["QST_GUID"] = guid;
+				var userid = window.localStorage["UserGuid"];
+				//把选择的问卷存储到数据库中
+				$.ajax({
+					data: "{userid:'"+userid+"',qst:'" + guid + "'}",
+					type: "post",
+					dataType: "json",
+					async:false,
+					contentType: "application/json;utf-8",
+					url: MakeUser_Qst_url,
+					success: function(MyJson) { //回调函数，MyJson，返回值
+						var MyData = MyJson.d;
+						//MyData = eval(MyData);
+						//alert(MyJson.d);
+						window.localStorage["UQI_GUID"] = MyData;
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert('访问网络失败！' + errorThrown);
+					}
+				});
+				plus.webview.open("/naires.html");
+			}
 		</script>
 	</body>
 

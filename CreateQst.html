@@ -55,7 +55,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<!--<a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>-->
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
 			<h1 class="mui-title">梅叶医疗调查问卷</h1>
 		</header>
@@ -82,14 +82,14 @@
 		</div>
 		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			window.localStorage["QS_GUID"] = "";
-			function createQst(title, beginTime, endTime, status, type) {	
+			
+			function createQst(title, beginTime, endTime, status, type,user_guid) {	
 				//alert(title+","+beginTime+","+endTime);
 				$.ajax({
-					data: "{title:'" + title + "',beginTime:'" + beginTime + "',endTime:'" + endTime + "',status:'" + status + "',type:'" + type + "'}",
+					data: "{title:'" + title + "',beginTime:'" + beginTime + "',endTime:'" + endTime + "',status:'" + status + "',type:'" + type + "',user_guid:'" + user_guid + "'}",
 					type: "post",
 					dataType: "json",
-					contentType: "application/json;utf-8",
+					contentType: "application/json;utf-8", 
 					url: CreateQst_url,
 					success: function(MyJson) { //回调函数，MyJson，返回值
 						var result = MyJson.d;
@@ -110,7 +110,7 @@
 			}
 
 			(function($, doc) {
-
+				window.localStorage["QS_GUID"] = "";
 				var dDate = new Date()
 				var day = dDate.getDate(),
 					month = dDate.getMonth(),
@@ -156,15 +156,16 @@
 						title: "请选择日期",
 						date: dDate,
 						minDate: minDate,
-						maxDate: maxDate
+						maxDate: maxDate 
 					});
 				})
 
 				document.getElementById("question_bank").addEventListener('tap', function(event) {
+					var userguid = window.localStorage["UserGuid"];
 					var qst_title = document.getElementById("Qst_title").value;
 					var startDate = document.getElementById("startDate").innerText;
 					var endDate = document.getElementById("endDate").innerText;
-					createQst(qst_title, startDate, endDate,'','');
+					createQst(qst_title, startDate, endDate,'','',userguid);
 
 				}, false);
 

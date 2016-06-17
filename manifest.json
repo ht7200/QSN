@@ -1,7 +1,7 @@
 {
 	"@platforms": ["android", "iPhone", "iPad"],
 	"id": "H59ACA421",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "OuterNet",/*应用名称，程序桌面图标名称*/
+	"name": "梅叶医疗",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
 		"code": "83"
@@ -110,12 +110,12 @@
 						"landscape-retina7": ""
 					}
 				},
-				"android": {
-					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": ""
+				"android": {"hdpi":"C:/Users/Administrator/Desktop/问卷调查/外网APP  不同分辨率/480-762.png","ldpi":"C:/Users/Administrator/Desktop/问卷调查/外网APP  不同分辨率/320-442.png","mdpi":"C:/Users/Administrator/Desktop/问卷调查/外网APP  不同分辨率/240-282.png","xhdpi":"C:/Users/Administrator/Desktop/问卷调查/外网APP  不同分辨率/720-1242.png","xxhdpi":"C:/Users/Administrator/Desktop/问卷调查/外网APP  不同分辨率/1080-1882.png"
+					 /*普通屏启动图片，分辨率：240x282*/
+					 /*大屏启动图片，分辨率：320x442*/
+					 /*高分屏启动图片，分辨率：480x762*/
+					 /*720P高分屏启动图片，分辨率：720x1242*/
+					
 				}
 			}
 		}
@@ -165,7 +165,8 @@
 					"js/jquery-1.9.1.min.js",
 					"css/mui.min.css",
 					"js/config.js",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"img/shuijiao.jpg"
 				],
 				"refer": [
 					"index.html",
@@ -210,7 +211,9 @@
 				],
 				"refer": [
 					"index.html",
-					"PainSurvery.html"
+					"PainSurvery.html",
+					"question.html",
+					"Main.html"
 				],
 				"priority": 0
 			},
@@ -231,7 +234,8 @@
 					"index.html",
 					"barcode_scan.html",
 					"GSQDSurvery.html",
-					"PainSurvery.html"
+					"PainSurvery.html",
+					"question.html"
 				],
 				"priority": 0
 			},
@@ -251,7 +255,9 @@
 					"js/My97DatePicker/lang/zh-cn.js",
 					"js/My97DatePicker/skin/default/datepicker.css",
 					"js/My97DatePicker/skin/default/img.gif",
-					"js/My97DatePicker/calendar.js"
+					"js/My97DatePicker/calendar.js",
+					"fonts/mui.ttf",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"GSQDSurvery.html",
@@ -276,11 +282,19 @@
 					"fonts/mui.ttf",
 					"css/iconfont.css",
 					"css/menu.css",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"js/jquery-1.9.1.min.js",
+					"css/mui.min.css",
+					"js/config.js"
 				],
 				"refer": [
 					"index.html",
-					"CreateQst.html"
+					"CreateQst.html",
+					"edit_Qst.html",
+					"reply.html",
+					"Main.html",
+					"PainSurvery.html",
+					"personal.html"
 				],
 				"priority": 0
 			},
@@ -289,7 +303,8 @@
 					"js/mui.min.js",
 					"js/jquery-1.9.1.min.js",
 					"css/mui.min.css",
-					"js/config.js"
+					"js/config.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"question_bank.html"
@@ -305,7 +320,8 @@
 					"js/config.js"
 				],
 				"refer": [
-					"createQs.html"
+					"createQs.html",
+					"question.html"
 				],
 				"priority": 0
 			},
@@ -319,6 +335,97 @@
 				],
 				"refer": [
 					"question_bank.html"
+				],
+				"priority": 0
+			},
+			"edit_Qst.html": {
+				"resources": [
+					"js/mui.min.js",
+					"js/jquery-1.9.1.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/config.js"
+				],
+				"refer": [
+					"createQs.html",
+					"QstInfor.html",
+					"Main.html"
+				],
+				"priority": 0
+			},
+			"reply.html": {
+				"resources": [
+					"js/mui.min.js",
+					"js/jquery-1.9.1.min.js",
+					"css/mui.min.css",
+					"js/config.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"naires.html"
+				],
+				"priority": 0
+			},
+			"naires.html": {
+				"resources": [
+					"js/mui.min.js",
+					"js/jquery-1.9.1.min.js",
+					"css/mui.min.css",
+					"js/config.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"thanks.html"
+				],
+				"priority": 0
+			},
+			"QstInfor.html": {
+				"resources": [
+					"js/mui.min.js",
+					"js/jquery-1.9.1.min.js",
+					"css/mui.min.css",
+					"js/config.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"QsList.html"
+				],
+				"priority": 0
+			},
+			"QsList.html": {
+				"resources": [
+					"js/mui.min.js",
+					"js/jquery-1.9.1.min.js",
+					"css/mui.min.css",
+					"js/config.js"
+				],
+				"refer": [
+					"editQs.html"
+				],
+				"priority": 0
+			},
+			"editQs.html": {
+				"resources": [
+					"js/mui.min.js",
+					"js/jquery-1.9.1.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/config.js"
+				],
+				"refer": [
+					"QsList.html"
+				],
+				"priority": 0
+			},
+			"thanks.html": {
+				"resources": [
+					"js/mui.min.js",
+					"js/jquery-1.9.1.min.js",
+					"css/mui.min.css",
+					"img/thank.png"
+				],
+				"refer": [
+					"index.html"
 				],
 				"priority": 0
 			}

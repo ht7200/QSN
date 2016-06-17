@@ -1,0 +1,378 @@
+﻿
+body {
+<<<<<<< .mine
+    font: normal 100% Helvetica, Arial, sans-serif;background-color:#FFFFFF;opacity:1;
+=======
+    font: normal 100% Helvetica, Arial, sans-serif;background-color:#FFFFFF;
+>>>>>>> .r1574915
+}
+h1 {
+    font-weight: normal;
+    font-size: 1.5em; 
+}
+
+.more a, .bubble a:hover, #commentform input#submit {
+	background-color: #79ACCD;
+}
+a, .title a:hover, #navigation ul ul li a:hover, #navigation > ul > li > a:hover {
+color:#79ACCD;
+}
+
+.BackColor{
+    color:#000000;
+    background-color:#FFF5F7;
+}
+
+.Bed{
+width:18%;
+height:4em;
+float:left;
+position:relative;
+font-size:0.8em;
+margin-left:1%;
+margin-right:1%;
+margin-top:2%;
+background:url("../Content/images/Menu/nav_bg.gif") no-repeat;
+-webkit-background-size:100% 100%;
+text-align:center;
+}
+.Bed a,
+.Bed a:link,
+.Bed a:visited{
+overflow:hidden;
+display:block;
+}
+
+.BedContent {
+width:100%;
+height:2em;
+text-align:center;
+line-height:2em;
+vertical-align:middle;
+}
+
+.BedContentHave{
+color:#007DB8;
+width:100%;
+height:2em;
+text-align:center;
+line-height:2em;
+vertical-align:middle;
+}
+
+.BedMain{
+width:30%;
+height:4em;
+float:left;
+position:relative;
+font-size:0.8em;
+margin-left:1%;
+margin-right:1%;
+margin-top:2%;
+background:url("../Content/images/Menu/nav_bg.gif") no-repeat;
+-webkit-background-size:100% 100%;
+text-align:center;
+}
+.BedMain a,
+.BedMain a:link,
+.BedMain a:visited{
+overflow:hidden;
+display:block;
+}
+
+.BedMainContent {
+width:100%;
+height:2em;
+text-align:center;
+line-height:2em;
+vertical-align:middle;
+}
+
+.BedMainContentHave{
+color:#007DB8;
+width:100%;
+height:2em;
+text-align:center;
+line-height:2em;
+vertical-align:middle;
+}
+
+.Menu{
+width:100%;
+height:121px;
+line-height:121px;
+float:left;
+position:relative;
+margin-right:5%;
+margin-top:20px;
+background-image:url("../Content/images/PatientMenu.jpg");
+text-align:center;
+vertical-align:middle;
+font-size:16px;
+}
+.Menu a,
+.Menu a:link,
+.Menu a:visited{
+overflow:hidden;
+display:block;
+}
+.myDiv{
+    border-style:solid; border-width:1px; border-color:#ABADB3;
+    height: 2.1em;background-color:#FFFFFF;
+    line-height:2.1em;
+}
+.myDiv a,
+.myDiv a:link,
+.myDiv a:visited{
+overflow:hidden;
+display:block;
+text-decoration:none;
+color:#000000;
+float: right
+}
+
+#TXSelect
+{
+    overflow:hidden;
+    font-size: 0.825em;
+    background-color:#FFFFFF;
+    
+}
+.MenuClick{
+height:30px;
+line-height:30px;
+position:relative;
+background-image:url("../Images/app-rbt-l.png"),url("../Images/app-rbt-c.png"),url("../Images/app-rbt-r.png");
+background-repeat:no-repeat,repeat,no-repeat;
+-webkit-background-clip: padding-box,content-box,padding-box;
+background-clip: padding-box,content-box,padding-box;
+-webkit-background-size:0.4em 100%,auto 100%,0.4em 100%;
+background-size:0.4em 100%,auto 100%,0.4em 100%;
+background-position:left,center,right;
+padding:0 0.4em;
+min-height:2.2em;
+text-align:center;
+vertical-align:middle;
+font-size:1.6em;
+}
+.MenuClick a,
+.MenuClick a:link,
+.MenuClick a:visited{
+overflow:hidden;
+display:block;
+}
+
+.Back{
+width:100em;
+height:20em;
+position:relative;
+margin-right:2%;
+margin:1em;
+background-image:url("../Content/images/button.jpg");
+background-repeat:round;
+text-align:center;
+}
+.Back a,
+.Back a:link,
+.Back a:visited{
+overflow:hidden;
+display:block;
+}
+
+.headMenu {
+width:100%;
+height:5em;
+line-height:5em;
+background-image:url('../Content/images/button.jpg'); 
+background-repeat:repeat-x;
+}
+
+.headMenuItem{
+width:8em;
+height:3em;
+position:relative;
+line-height:3em;
+float:left;
+margin-top:1em;
+margin-left:1em;
+background-color:#F5F5F5;
+text-align:center;
+}
+
+.headMenuItem a,
+.headMenuItem a:link,
+.headMenuItem a:visited {
+overflow:hidden;
+display:block;
+}
+
+.footMenu{
+width:100%;
+height:3em;
+line-height:3em;
+background-image:url('../Content/images/button.jpg'); 
+background-repeat:repeat-x;
+}
+
+.footMenuItem{
+width:33%;
+height:3em;
+position:relative;
+line-height:3em;
+float:left;
+background-color:#00A1EA;
+text-align:center;
+}
+.footMenuItemNew{
+width:50%;
+height:3em;
+position:relative;
+line-height:3em;
+float:left;
+background-color:#00A1EA;
+text-align:center;
+}
+
+.footMenuItem a,
+.footMenuItem a:link,
+.footMenuItem a:visited {
+overflow:hidden;
+display:block;
+}
+
+.focus {
+    background-color: #D43C33;
+    color: #fff;
+}
+
+.ChildContent {
+width:100%;
+height:20%;
+font-size:1.0em;
+margin: 2em 0 0 0;
+color:#FFFFFF;
+text-align:center;
+background:url('../Content/images/PatientMenu.jpg') no-repeat;
+-webkit-background-size:100% 100%;
+}
+
+.BigButton {
+width:70%;
+height:2em;
+line-height:2em;
+font-size:2em;
+margin:0 auto;
+color:#FFFFFF;
+text-align:center;
+background:url('../Content/images/PatientMenu.jpg') no-repeat;
+-webkit-background-size:100% 100%;
+}
+
+.ScoreItem{
+width:100%;
+font-size:1em;
+margin:0.5em 0 0 0;   
+height:2em;
+line-height:2em; 
+}
+
+.Schedule{
+width:100%;
+font-size:1em;
+margin:1em 0 0 0;
+height:2em;
+line-height:2em;
+text-align:center;
+}
+
+.ScheduleContentL{
+width:40%;
+height:2em;
+line-height:2em;
+text-align:right;
+float:left;
+}
+
+.ScheduleContentR{
+width:60%;
+height:2em;
+line-height:2em;
+text-align:left;
+float:left;
+}
+
+.ScheduleButton{
+margin:0 auto;
+padding:0;
+width:30%;
+color:#FFFFFF;
+line-height:2em;
+height:2em;
+text-align:center;
+background-image:url('../Content/images/button.jpg'); 
+}
+
+.LoginButtonBg{
+    background-color: #1DB8A8 ;
+}
+
+.LoginButton{
+    color: #1DB8A8;
+}
+
+.Vital{
+    width: 100%;
+    border-radius: 0.3em;
+}
+
+.VitalDescription
+{
+    background-color:#1DB8A8;
+    width:98%;
+    height: 3em;
+    line-height: 3em;
+    font-size: 1em;
+    border-radius: 0.3em;
+}
+
+.Icon-Home{
+    width:2em;
+    height:1.5em;
+    background:url("../Images/MenuIcon/Home.png") no-repeat;
+    -webkit-background-size:100% 100%;
+}
+
+.Icon-InsertPatient{
+    width:2em;
+    height:1.5em;
+    background:url("../Images/MenuIcon/InsertPatient.png") no-repeat;
+    -webkit-background-size:100% 100%;
+}
+
+.Icon-PatientInform{
+    width:2em;
+    height:1.5em;
+    background:url("../Images/MenuIcon/PatientInform.png") no-repeat;
+    -webkit-background-size:100% 100%;
+}
+
+.Icon-BedChange{
+    width:2em;
+    height:1.5em;
+    background:url("../Images/MenuIcon/BedChange.png") no-repeat;
+    -webkit-background-size:100% 100%;
+}
+
+.Icon-ChildInform{
+    width:2em;
+    height:1.5em;
+    background:url("../Images/MenuIcon/ChildInform.png") no-repeat;
+    -webkit-background-size:100% 100%;
+}
+
+.Icon-VitalInform{
+    width:2em;
+    height:1.5em;
+    background:url("../Images/MenuIcon/VitalInform.png") no-repeat;
+    -webkit-background-size:100% 100%;
+}

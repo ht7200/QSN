@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/AppCss.css" rel="stylesheet" />
+		<link href="css/menu.css" rel="stylesheet" />
+		<link href="css/iconfont.css" rel="stylesheet" />
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/config.js"></script>
+		<style>
+			.mui-title {
+				color: #fff;
+			}
+			
+			.mui-bar {
+				background-color: #FFA1BC;
+			}
+			
+			.mui-content h5 {
+				/*text-indent: 2em; //首行缩进  */
+				line-height: 1.4em;
+				font-size: 1em; 
+				color: #4f4f44
+			}
+			
+			.mui-input-group {
+				background-color: #efeff4;
+			}
+			
+			.mui-content label {
+				color: #797979;
+				font-size: .8em;
+			}
+			
+			.mui-checkbox {
+				width: 145px;
+				float: right;
+			}
+			
+			.mui-input-group .mui-input-row {
+				height: 31px;
+			}
+			
+			.sieve {
+				width: 100%;
+				height: 50px;
+				z-index: 10;
+				position: fixed;
+				top: 40px;
+				left: 0;
+				padding: 5px;
+				background-color: #F7F7F7;
+			}
+			
+			.mui-search {
+				width: 35%;
+				margin-top: 5px;
+				display: inline-block;
+				float: right;
+			}
+			
+			.pagination {
+				margin-top: 4em;
+				width: 100%;
+				text-align: center;
+			}
+			
+			#addQst {
+				display: inline-block;
+				float: left;
+				margin: 20px;
+				margin-left: 10px;
+			}
+			
+			#submit {
+				float: right;
+				margin: 20px;
+				margin-right: 10px;
+			}
+			
+			.margin-t {
+				margin-top: 47px;
+			}
+		</style>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<!--<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>-->
+			<h1 class="mui-title">梅叶医疗调查问卷</h1>
+		</header>
+	</body>
+	<div class="mui-content">
+		
+		<form class="mui-input-group" id="QsContent">
+			
+		</form>
+		<!--<span class="mui-icon mui-icon-plusempty"></span>-->
+		<div class="mui-card">
+			<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined" id="addQst">
+					创建新问卷
+			</button>
+
+			<button type="button" class="mui-btn mui-btn-success mui-btn-outlined" id="submit">
+					回到主菜单
+			</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+		//拖拽后显示操作图标，点击操作图标删除元素；
+		
+		$().ready(function(){
+			loadData();
+		})
+		
+		
+		$("#addQst").click(function(){
+			plus.webview.open("/createQst.html");
+		})
+		
+		$("#submit").click(function(){
+			plus.webview.open("Main.html");
+		})
+
+		function loadData() {
+			var userguid = window.localStorage["UserGuid"];
+			$("#QsContent").html("");
+			$.ajax({
+				data: "{id:'',userguid:'"+userguid+"'}",
+				type: "POST",
+				dataType: "json",
+				contentType: "application/json;utf-8",
+				url: GetMyQsTime_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					if (MyJson == "-1") {
+						alert("失败");
+					} else {
+						var MyData = MyJson.d;
+						MyData = eval(MyData);
+						var htmlQs = "<ul id='OA_task_1' class='mui-table-view'>";
+						$.each(MyData, function(i, qsData) {
+							htmlQs+="<li class='mui-table-view-cell'>";
+							htmlQs+="<div class='mui-slider-right mui-disabled'>";
+							htmlQs+="<a class='mui-btn mui-btn-red' title='"+qsData.QST_GUID+"' >"
+							htmlQs+="删除</a>";
+							htmlQs+="</div>";
+							htmlQs+="<div class='mui-slider-handle' onclick=\"EditQst('" + qsData.QST_GUID + "')\">";  
+							htmlQs+="<h5 class='mui-content-padded'>";
+							htmlQs+=qsData.QST_Title;
+							htmlQs+="</h5>";
+							htmlQs+="</div>";
+							htmlQs+="</li>"
+						})
+						htmlQs+="</ul>";
+						$("#QsContent").html(htmlQs);
+						
+						$('#OA_task_1').on('tap', '.mui-btn', function(event) {
+						var elem = this;
+						var li = elem.parentNode.parentNode;   
+						
+						mui.confirm('确认删除此题？', '温馨提示', btnArray, function(e) {
+							//alert(elem.title);
+							if (e.index == 0) {
+								DeleteQst(elem.title);
+								DeleteQst_Qs(elem.title);
+
+								li.parentNode.removeChild(li); 
+								
+							} else {
+								setTimeout(function() {
+									$.swipeoutClose(li);
+								}, 0);
+							}
+						});
+					});
+					var btnArray = ['确认', '取消'];
+						
+						// alert(htmlQs);
+						//$("#QsContent").append(htmlQs); 
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					$("div").html(textStatus);
+					$("div").append("<br/>" + XMLHttpRequest.status);
+					$("div").append("<br/>" + XMLHttpRequest.readyState);
+					$("div").append("<br/>" + XMLHttpRequest.responseText);
+					$("div").append("<br/>" + errorThrown);
+				}
+			})
+		}
+		
+		function EditQst(guid){
+			//alert(guid)
+			window.localStorage["QST_GUID"] = guid;
+			plus.webview.open("/QstInfor.html");
+		}
+		
+		function DeleteQst(guid){
+			$.ajax({
+				data: "{id:'"+guid+"'}",
+				type: "post",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: DeleteQst_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					alert(MyJson.d);
+					//plus.webview.open("/question.html");
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert('访问网络失败！' + errorThrown);
+				}
+			});
+		}
+		function DeleteQst_Qs(guid){ 
+			$.ajax({
+				data: "{id:'"+guid+"'}",
+				type: "POST",
+				dataType: "json",
+				async:false,
+				contentType: "application/json;utf-8",
+				url: DeleteQst_Qs_url,
+				success: function(MyJson) { //回调函数，MyJson，返回值
+					if (MyJson == "-1") {
+						alert("失败");
+					} else {
+						var MyData = MyJson.d;
+						alert(MyData);
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					
+				}
+			})
+		}
+		
+		function UpdateQst(){
+			
+		}
+		
+	</script>
+	</body>
+
+</html>
